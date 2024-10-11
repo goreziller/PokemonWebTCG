@@ -4,23 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="degisn_registerung.css">
+    <script src="registerungsscript.js"></script>
     <title>Registerung</title>
 </head>
 <body>
     <div class="container">
-        <form action="registeren.php">
-            <h2>Registerung</h2>
-            <input type="text" name="benutzername" placeholder="benutzername">
-            <input type="text" name="vorname" placeholder="Vorname">
-            <input type="text" name="nachname" placeholder="Nachname">
-            <input type="date" name="bday" placeholder="Geburtstag">
-            <input type="text" name="email" placeholder="email">
-            <input type="text" name="Straße" placeholder="Straße">
-            <input type="text" name="Hausnummer" placeholder="Hausnummer">
-            <input type="text" name="Ort" placeholder="Ort">
-            <input type="text" name="plz" placeholder="Postleitzahl">
-            <input type="passwort" name="pw" placeholder="Passwort">
-            <input type="passwort" name="pwagain" placeholder="Passwort bestätigen">
+        <form action="registeren.php" method="POST">
+            <h2>Registrierung</h2>
+            <input type="text" name="benutzername" placeholder="Benutzername" required>
+            <input type="text" name="vorname" placeholder="Vorname" required>
+            <input type="text" name="nachname" placeholder="Nachname" required>
+            <input type="date" name="bday" required>
+            <input type="text" name="email" placeholder="E-Mail" required>
+            <div class="password-container">
+                <input type="password" id="password" name="pw" placeholder="Passwort" required>
+                <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
+            </div>
+            <div class="password-container">
+                <input type="password" id="passwordConfirm" name="pwagain" placeholder="Passwort bestätigen" required>
+                <span class="toggle-password" onclick="togglePassword('passwordConfirm')">👁️</span>
+            </div>
             <div class="button-group">
                 <input type="submit" value="Registrieren">
             </div>

@@ -7,20 +7,22 @@
     <link rel="stylesheet" href="design_main.css">
 </head>
 <body>
-    <h1>Willkommen zurück, <!-- Spielername über PHP und Database --></h1>
-    <div class="container">
-        <div class="cardfolder">
-            <img src="/Pictures/Pokemonordner.jfif" alt="Pokemon Ordner">
-            <button>Zum Kartenordner</button>
+    <h1>Willkommen zurück, <?php include("Hauptmenü.php"); name(); ?></h1>
+    <form action="hauptmenü.php" method="POST">
+        <div class="container">
+            <div class="cardfolder">
+                <img src="Pokemonordner.jfif" alt="Pokemon Ordner">
+                <button name="folder">Zum Kartenordner</button>
+            </div>
+            <div class="packs">
+                <img src="pack.jfif" alt="Pokemon Packs">
+                <button name="openpacks">Packs öffnen</button>
+            </div>
+            <div class="shop">
+                <img src="cardshop.jfif" alt="Pokemon Cardshop">
+                <button name="openshop">Zum Kartenmarkt</button>
+            </div>
         </div>
-        <div class="packs">
-            <img src="/Pictures/pack.jfif" alt="Pokemon Packs">
-            <button>Packs öffnen</button>
-        </div>
-        <div class="shop">
-            <img src="/Pictures/cardshop.jfif" alt="Pokemon Cardshop">
-            <button>Zum Kartenmarkt</button>
-        </div>
-    </div>
+    </form>
 </body>
 </html>

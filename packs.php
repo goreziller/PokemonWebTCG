@@ -17,6 +17,6 @@
       <button id="btn">Generate</button>
     </div>
     <!-- Script -->
-    <script src="script.js"></script>
+    <script src="pokemonscript.js"></script>
   </body>
 </html>
