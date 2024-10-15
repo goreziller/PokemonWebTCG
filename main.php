@@ -11,15 +11,15 @@
     <form action="hauptmenü.php" method="POST">
         <div class="container">
             <div class="cardfolder">
-                <img src="Pokemonordner.jfif" alt="Pokemon Ordner">
+                <img src="./bilder/Pokemonordner.jfif" alt="Pokemon Ordner">
                 <button name="folder">Zum Kartenordner</button>
             </div>
             <div class="packs">
-                <img src="pack.jfif" alt="Pokemon Packs">
+                <img src="./bilder/pack.jfif" alt="Pokemon Packs">
                 <button name="openpacks">Packs öffnen</button>
             </div>
             <div class="shop">
-                <img src="cardshop.jfif" alt="Pokemon Cardshop">
+                <img src="./bilder/cardshop.jfif" alt="Pokemon Cardshop">
                 <button name="openshop">Zum Kartenmarkt</button>
             </div>
         </div>

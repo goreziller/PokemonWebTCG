@@ -1,79 +1,144 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+.card-container 
+{
+  display: flex;
+  flex-wrap: wrap; /* Erlaubt das Umbrechen der Karten */
+  justify-content: center; /* Zentriert die Karten */
+  gap: 20px; /* Abstand zwischen den Karten */
+}
+
+.card 
+{
+  border-style: solid;
+  border-color: black;
+  position: relative;
+  width: 300px; /* Feste Breite für die Karten */
+  height: 450px; /* Feste Höhe für die Karten */
+  padding: 30px 20px;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column; /* Vertikale Anordnung der Inhalte */
+  justify-content: space-between; /* Platz zwischen den Elementen */
+}
+
+.card img 
+{
+  display: block;
+  width: 100%; /* Bildbreite anpassen */
+  max-height: 150px; /* Maximalhöhe des Bildes */
+  margin: 20px auto;
+}
+
+.hp {
+  width: 80px;
+  background-color: #ffffff;
+  text-align: center;
+  padding: 8px 0;
+  border-radius: 30px;
+  margin-left: auto;
+  font-weight: 400;
+}
+
+.poke-name {
+  text-align: center;
+  font-weight: 600;
+}
+
+.types 
+{
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.hp span,
+.types span 
+{
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  font-weight: 600;
+}
+
+.types span {
+  padding: 5px 10px; /* Padding anpassen, um die Größe zu reduzieren */
+  border-radius: 20px;
+  color: #ffffff;
+  border-style: solid;
+  border-color: black;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.stats p 
+{
+  color: black;
+}
+
+#btn {
+  display: block;
+  padding: 15px 60px;
+  font-size: 18px;
+  background-color: #101010;
+  color: #ffffff;
+  position: relative;
+  margin: 30px auto;
+  border: none;
+  border-radius: 5px;
+}
+
+.rainbow-box {
+  border: 5px solid transparent; /* Transparenter Rand für den Farbverlauf */
+  border-image: linear-gradient(to bottom right, #b827fc, #2c90fc, #b8fd33, #fec837, #fd1892);
+  border-image-slice: 1; /* Stellt sicher, dass der Farbverlauf den Rand füllt */
+  height: 450px; /* Feste Höhe für die Karten */
+  width: 300px; /* Feste Breite für die Karten */
+  position: relative; /* Positionierung für das Bild und den Inhalt */
+  overflow: hidden; /* Verhindert, dass der Inhalt über den Rand hinausgeht */
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); /* Weicher Schatten für den Holo-Effekt */
+}
+
+.rainbow-box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 60%);
+  transform: rotate(-30deg);
+  pointer-events: none; /* Verhindert, dass das Pseudo-Element die Interaktion mit der Karte blockiert */
+  animation: shine 1.5s infinite; /* Animation für den Glanz */
+}
+
+@keyframes shine {
+  0% {
+      transform: translate(-100%, -100%) rotate(-30deg);
   }
-  body {
-    background-color: #eff3ff;
+  100% {
+      transform: translate(100%, 100%) rotate(-30deg);
   }
-  .container {
-    width: 350px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
+}
+
+/* Medienabfragen für responsives Design */
+@media (max-width: 1024px) {
+  .card {
+      width: 45%; /* Breite für Tablets */
   }
-  #card {
-    position: relative;
-    width: 100%;
-    padding: 30px 20px;
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .card {
+      width: 90%; /* Breite für Smartphones */
   }
-  #card img {
-    display: block;
-    width: 180px;
-    max-height: 200px;
-    position: relative;
-    margin: 20px auto;
-  }
-  .hp {
-    width: 80px;
-    background-color: #ffffff;
-    text-align: center;
-    padding: 8px 0;
-    border-radius: 30px;
-    margin-left: auto;
-    font-weight: 400;
-  }
-  .poke-name {
-    text-align: center;
-    font-weight: 600;
-  }
-  .types {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px 0 40px 0;
-  }
-  .hp span,
-  .types span {
-    font-size: 12px;
-    letter-spacing: 0.4px;
-    font-weight: 600;
-  }
-  .types span {
-    padding: 5px 20px;
-    border-radius: 20px;
-    color: #ffffff;
-  }
-  .stats {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-align: center;
-  }
-  .stats p {
-    color: #404060;
-  }
-  #btn {
-    display: block;
-    padding: 15px 60px;
-    font-size: 18px;
-    background-color: #101010;
-    color: #ffffff;
-    position: relative;
-    margin: 30px auto;
-    border: none;
-    border-radius: 5px;
-  }
+}
+.title-image {
+  width: 25%; /* Bild nimmt 100% der Breite des Containers ein */
+  height: auto; /* Höhe wird automatisch angepasst */
+  display: block; /* Block-Element für das Bild */
+  margin: 0 auto; /* Zentriert das Bild */
+}

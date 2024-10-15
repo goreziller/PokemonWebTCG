@@ -1,6 +1,6 @@
 html
 {
-    background: url(background.png) no-repeat center;
+    background: url('./bilder/background.png') no-repeat center;
     background-attachment: fixed;
     background-size: cover;
 }

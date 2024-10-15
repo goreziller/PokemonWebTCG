@@ -1,14 +1,14 @@
 html
 {
-    background: url(background.png) no-repeat center;
+    background: url('./bilder/background.png') no-repeat center;
     background-attachment: fixed;
     background-size: cover;
+
 }
 
 body 
 {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
