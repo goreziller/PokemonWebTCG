@@ -24,6 +24,11 @@ const legendaryPokemonNames =
 [
   "articuno", "zapdos", "moltres", "mewtwo", "mew", "raikou", "entei", "suicune", "lugia", "ho-oh",
   "regirock", "regice", "registeel", "latios", "latias", "kyogre", "groudon", "rayquaza",
+  "uxie", "mesprit", "azelf", "dialga", "palkia", "heatran", "giratina", "cresselia", "regigigas",
+  "cobalion", "terraktion", "virizion", "tornadus", "thundurus", "reshiram", "zekrom", "landorus", "kyurem",
+  "keldeo", "xerneas", "yveltal", "zygarde", "tapu koko", "tapu lele", "tapu bulu", "tapu fini", "cosmog",
+  "cosmoem", "solgaleo", "lunala", "necrozma", "zacian", "zamazenta", "eternatus", "kabfu", "urshifu",
+  "glastrier", "spectrier", "calyrex", "regieleki", "regidrago", "enamorus"
 ];
 
 const url = "https://pokeapi.co/api/v2/pokemon/";
