@@ -1,17 +1,15 @@
-.card-container 
-{
+.card-container {
   display: flex;
   flex-wrap: wrap; /* Erlaubt das Umbrechen der Karten */
   justify-content: center; /* Zentriert die Karten */
   gap: 20px; /* Abstand zwischen den Karten */
 }
 
-.card 
-{
+.card {
   border-style: solid;
   border-color: black;
   position: relative;
-  width: 300px; /* Feste Breite für die Karten */
+  width: 300px;
   height: 450px; /* Feste Höhe für die Karten */
   padding: 30px 20px;
   box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
@@ -19,14 +17,26 @@
   display: flex;
   flex-direction: column; /* Vertikale Anordnung der Inhalte */
   justify-content: space-between; /* Platz zwischen den Elementen */
+  cursor: pointer; /* Zeige an, dass die Karte klickbar ist */
+  transition: transform 0.2s; /* Sanfte Übergänge für Transformationen */
 }
 
-.card img 
-{
+.card.selected {
+  border: 2px solid #f06d16; /* Beispiel für eine Markierung */
+  box-shadow: 0 0 15px rgba(192, 23, 11, 0.5); /* Schatten für den markierten Zustand */
+  transform: scale(1.03); /* Vergrößert die gesamte Karte leicht bei Markierung */
+}
+
+.card img {
   display: block;
   width: 100%; /* Bildbreite anpassen */
   max-height: 150px; /* Maximalhöhe des Bildes */
   margin: 20px auto;
+  transition: transform 0.2s; /* Sanfte Übergänge für Transformationen */
+}
+
+.card.selected img {
+  transform: scale(1.08); /* Vergrößert das Bild bei Markierung */
 }
 
 .hp {
@@ -44,16 +54,14 @@
   font-weight: 600;
 }
 
-.types 
-{
+.types {
   display: flex;
   justify-content: space-around;
   margin: 20px 0;
 }
 
 .hp span,
-.types span 
-{
+.types span {
   font-size: 12px;
   letter-spacing: 0.4px;
   font-weight: 600;
@@ -74,21 +82,8 @@
   text-align: center;
 }
 
-.stats p 
-{
+.stats p {
   color: black;
-}
-
-#btn {
-  display: block;
-  padding: 15px 60px;
-  font-size: 18px;
-  background-color: #101010;
-  color: #ffffff;
-  position: relative;
-  margin: 30px auto;
-  border: none;
-  border-radius: 5px;
 }
 
 .rainbow-box {
@@ -136,9 +131,43 @@
       width: 90%; /* Breite für Smartphones */
   }
 }
+
 .title-image {
   width: 25%; /* Bild nimmt 100% der Breite des Containers ein */
   height: auto; /* Höhe wird automatisch angepasst */
   display: block; /* Block-Element für das Bild */
   margin: 0 auto; /* Zentriert das Bild */
+}
+
+.button-container {
+  display: flex; /* Flexbox verwenden */
+  justify-content: center; /* Zentriert die Buttons */
+  margin-top: 20px; /* Abstand nach oben */
+}
+
+.button-container {
+  display: flex; /* Flexbox verwenden */
+  justify-content: center; /* Zentriert die Buttons */
+  margin-top: 20px; /* Abstand nach oben */
+}
+
+.button-container button {
+  flex: 1; /* Erlaubt den Buttons, gleichmäßig zu wachsen */
+  margin: 0 10px; /* Abstand zwischen den Buttons */
+  padding: 15px 0; /* Innenabstand für die Buttons */
+  font-size: 18px; /* Schriftgröße */
+  background-color: #101010; /* Hintergrundfarbe */
+  color: #ffffff; /* Textfarbe */
+  border: none; /* Kein Rand */
+  border-radius: 5px; /* Abgerundete Ecken */
+  cursor: pointer; /* Zeige an, dass die Buttons klickbar sind */
+  transition: background-color 0.3s; /* Sanfter Übergang für die Hintergrundfarbe */
+}
+
+.button-container button:hover {
+  background-color: #202020; /* Hintergrundfarbe bei Hover-Effekt */
+}
+
+.button-container button:hover {
+  background-color: #202020; /* Hintergrundfarbe bei Hover-Effekt */
 }
