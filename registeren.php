@@ -18,6 +18,7 @@
     if($Passwort == $PasswortAgain)
     {
         $Befehl->execute(array($Benutzer, $Vorname, $Nachname, $Geburtstag, $Email, password_hash($Passwort, PASSWORD_DEFAULT)));
+        $_SESSION["user-id"] = "Select MAX(id) as ID from benutzer";
         header('Location: main.php');
     }
 ?>

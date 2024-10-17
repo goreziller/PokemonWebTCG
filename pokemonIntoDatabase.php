@@ -1,33 +1,74 @@
 <?php
-    $servername = "localhost"; // oder die IP-Adresse Ihres Servers
-    $username = "root"; // Ihr MySQL-Benutzername
-    $password = ""; // Ihr MySQL-Passwort
-    $dbname = "pokemon_db"; // Der Name Ihrer Datenbank
+session_start(); // Starten Sie die Sitzung, um auf die Benutzer-ID zuzugreifen
 
-    // Verbindung zur Datenbank herstellen
-    $conn = new mysqli($servername, $username, $password, $dbname);
+$servername = "localhost"; // oder die IP-Adresse Ihres Servers
+$username = "root"; // Ihr MySQL-Benutzername
+$password = ""; // Ihr MySQL-Passwort
+$dbname = "spieler"; // Der Name Ihrer Datenbank
 
-    // Überprüfen Sie die Verbindung
-    if ($conn->connect_error) {
-        die("Verbindung fehlgeschlagen: " . $conn->connect_error);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+header('Content-Type: application/json'); // Setzen Sie den Header für JSON-Antworten
+
+$response = []; // Array für die Antwort
+
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Überprüfen Sie, ob der Benutzer angemeldet ist
+    if (!isset($_SESSION['user-id'])) {
+        $response['error'] = "Benutzer nicht angemeldet.";
+        echo json_encode($response);
+        exit;
     }
+
+    $userId = $_SESSION['user-id']; // Holen Sie sich die Benutzer-ID aus der Sitzung
 
     // Empfangen Sie die POST-Daten
     $data = json_decode(file_get_contents("php://input"), true);
-    $pokemonIds = $data['pokemonIds'];
+    $pokemonData = $data['pokemonData']; // Erwartet ein Array von Pokémon-Daten
 
-    // Bereiten Sie die SQL-Anweisung vor
-    $stmt = $conn->prepare("INSERT INTO pokemon (pokemon_id) VALUES (?)");
+    // SQL-Anweisung zum Einfügen von Pokémon vorbereiten
+    $stmt = $conn->prepare("INSERT INTO pokemon (name, bild, hp, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?)");
 
-    // Fügen Sie die Pokémon-IDs hinzu
-    foreach ($pokemonIds as $id) {
-        $stmt->bind_param("i", $id); // "i" steht für Integer
-        $stmt->execute();
+    // Pokémon-Daten einfügen
+    foreach ($pokemonData as $pokemon) {
+        $stmt->execute([
+            $pokemon['name'],
+            $pokemon['bild'],
+            $pokemon['hp'],
+            $pokemon['attack'],
+            $pokemon['defense'],
+            $pokemon['speed']
+        ]);
+
+        // Holen Sie sich die letzte eingefügte Pokémon-ID
+        $pokemonId = $conn->lastInsertId();
+
+        // Debugging-Informationen sammeln
+        $response['userId'] = $userId;
+        $response['pokemonId'] = $pokemonId;
+
+        // Beziehung in der Zwischentabelle herstellen
+        $stmtRelation = $conn->prepare("INSERT INTO benutzerpokemonkarten (BenutzerNr, PokemonKartenNr) VALUES (?, ?)");
+        $stmtRelation->execute([$userId, $pokemonId]);
     }
 
-    // Schließen Sie die Verbindung
-    $stmt->close();
-    $conn->close();
+    $response['message'] = "Pokémon erfolgreich hinzugefügt!";
+    
+} 
+catch (PDOException $e) 
+{
+    $response['error'] = "Fehler bei der Datenbankoperation: " . $e->getMessage();
+} 
+catch (Exception $e) 
+{
+    $response['error'] = $e->getMessage();
+}
 
-    echo json_encode(["message" => "Pokémon erfolgreich hinzugefügt!"]);
+echo json_encode($response);
+
+$conn = null;
 ?>

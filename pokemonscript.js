@@ -142,33 +142,59 @@ let styleCard = (types, card) => {
 };
 
 // Neue Funktion zum Hinzufügen der ausgewählten Pokémon zur Datenbank
-const addSelectedPokemonToDatabase = () => 
-  {
-  if (selectedPokemonIds.length === 0) {
-    alert("Bitte wähle mindestens ein Pokémon aus.");
-    return;
-  }
-
-  // Hier wird eine POST-Anfrage an die PHP-Datei gesendet
-  fetch("http://localhost/path/to/your/add_pokemon.php", { // Pfad zur PHP-Datei
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ pokemonIds: selectedPokemonIds })
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log("Pokémon erfolgreich hinzugefügt:", data);
-    alert("Pokémon erfolgreich hinzugefügt!");
-    selectedPokemonIds = []; // Leere die Liste nach dem Hinzufügen
-  })
-  .catch(error => {
-    console.error("Fehler beim Hinzufügen der Pokémon:", error);
-    alert("Fehler beim Hinzufügen der Pokémon.");
-  });
+const fetchPokemonData = async (pokemonId) => {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
+  const data = await response.json();
+  return {
+      name: data.name,
+      bild: data.sprites.front_default,
+      hp: data.stats[0].base_stat,
+      attack: data.stats[1].base_stat,
+      defense: data.stats[2].base_stat,
+      speed: data.stats[5].base_stat
+  };
 };
 
+const addSelectedPokemonToDatabase = async () => {
+  if (selectedPokemonIds.length === 0) {
+      alert("Bitte wähle mindestens ein Pokémon aus.");
+      return;
+  }
+
+  const pokemonDataArray = [];
+
+  for (const id of selectedPokemonIds) {
+      const pokemonData = await fetchPokemonData(id);
+      pokemonDataArray.push(pokemonData);
+  }
+
+  fetch("pokemonIntoDatabase.php", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ pokemonData: pokemonDataArray })
+  })
+  .then(response => response.json())
+  .then(data => 
+    {
+      if (data.error) 
+      {
+          console.error("Fehler beim Hinzufügen der Pokémon:", data.error);
+          alert("Fehler beim Hinzufügen der Pokémon: " + data.error);
+      } 
+      else 
+      {
+          console.log("Pokémon erfolgreich hinzugefügt:", data.message);
+          alert("Pokémon erfolgreich hinzugefügt!");
+          selectedPokemonIds = []; // Leere die Liste nach dem Hinzufügen
+      }
+  })
+  .catch(error => {
+      console.error("Fehler beim Hinzufügen der Pokémon:", error);
+      alert("Fehler beim Hinzufügen der Pokémon.");
+  });
+};
 const backBtn = document.getElementById("back-btn");
 
 btn.addEventListener("click", () => {

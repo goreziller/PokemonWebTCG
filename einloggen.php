@@ -9,6 +9,7 @@
         $select = "Select * From benutzer where BenutzerName = '$EnteredBenutzer'";
         foreach($pdo->query($select) as $row)
         {
+            $ID = $row["ID"];
             $Benutzer = $row['BenutzerName'];
             $_SESSION["vorname"] = $Vorname = $row['Vorname'];
             $_SESSION["nachname"] = $row['Nachname'];
@@ -20,5 +21,6 @@
         if(password_verify($EnteredPW, $Passwort) && $EnteredBenutzer == $Benutzer)
         {
             header('Location: main.php');
+            $_SESSION["user-id"] = $ID;
         }
 ?>

@@ -107,6 +107,7 @@ body
     width: 300px; 
     height: 450px;
     border-style: solid;
+    margin: 20px;
 }
 
 /* Kartenbilder */
@@ -126,7 +127,7 @@ body
 /* Stil für die Navigationsbuttons */
 .navigation 
 {
-    display: none; /* Standardmäßig ausblenden */
+    display: none;
     justify-content: center;
     margin-top: 20px;
 }
@@ -153,3 +154,87 @@ body
 {
     display: flex; /* Sichtbar machen, wenn das Buch geöffnet ist */
 }
+
+.card {
+    border-style: solid;
+    border-color: black;
+    position: relative;
+    width: 300px;
+    height: 450px; /* Feste Höhe für die Karten */
+    padding: 30px 20px;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column; /* Vertikale Anordnung der Inhalte */
+    justify-content: space-between; /* Platz zwischen den Elementen */
+    cursor: pointer; /* Zeige an, dass die Karte klickbar ist */
+    transition: transform 0.2s; /* Sanfte Übergänge für Transformationen */
+  }
+  
+  .card.selected {
+    border: 2px solid #f06d16; /* Beispiel für eine Markierung */
+    box-shadow: 0 0 15px rgba(192, 23, 11, 0.5); /* Schatten für den markierten Zustand */
+    transform: scale(1.03); /* Vergrößert die gesamte Karte leicht bei Markierung */
+  }
+  
+  .card img {
+    display: block;
+    width: 100%; /* Bildbreite anpassen */
+    max-height: 150px; /* Maximalhöhe des Bildes */
+    margin: 20px auto;
+    transition: transform 0.2s; /* Sanfte Übergänge für Transformationen */
+    object-fit: contain;
+  }
+  
+  .card.selected img {
+    transform: scale(1.08); /* Vergrößert das Bild bei Markierung */
+  }
+  
+  .hp {
+    width: 80px;
+    background-color: #ffffff;
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 30px;
+    margin-left: auto;
+    font-weight: 400;
+  }
+  
+  .poke-name {
+    text-align: center;
+    font-weight: 600;
+  }
+  
+  .types {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .hp span,
+  .types span {
+    font-size: 12px;
+    letter-spacing: 0.4px;
+    font-weight: 600;
+  }
+  
+  .types span {
+    padding: 5px 10px; /* Padding anpassen, um die Größe zu reduzieren */
+    border-radius: 20px;
+    color: #ffffff;
+    border-style: solid;
+    border-color: black;
+  }
+  
+  .stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+  }
+  
+  .stats p {
+    color: black;
+  }
+
+  
