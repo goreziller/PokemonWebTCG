@@ -31,7 +31,7 @@ try {
     $pokemonData = $data['pokemonData']; // Erwartet ein Array von Pokémon-Daten
 
     // SQL-Anweisung zum Einfügen von Pokémon vorbereiten, inklusive Type1 und Type2
-    $stmt = $conn->prepare("INSERT INTO pokemon (name, bild, hp, attack, defense, speed, Type1, Type2) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO pokemon (name, Bild, Hp, Attack, Defense, Speed, Type1, Type2) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
     // Pokémon-Daten einfügen
     foreach ($pokemonData as $pokemon) {

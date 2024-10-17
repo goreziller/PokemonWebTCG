@@ -31,6 +31,7 @@ const legendaryPokemonNames = [
 
 const btn = document.getElementById("btn");
 let selectedPokemonIds = []; // Array to store selected Pokémon IDs
+let loadedPokemonData = []; // Hier werden die geladenen Pokémon-Daten gespeichert
 
 // Function to fetch Pokémon data from the database
 let getPokeData = async () => {
@@ -46,6 +47,7 @@ let getPokeData = async () => {
 
     // Check if the fetched data is an array
     if (data && Array.isArray(data)) {
+      loadedPokemonData = data;
       data.forEach(pokemon => {
         if (pokemon) {
           generateCard(pokemon); // Generate a card for each Pokémon
@@ -61,28 +63,70 @@ let getPokeData = async () => {
   }
 };
 
-// Function to add Pokémon to the database (if needed)
-const addPokemonToDatabase = async (data) => {
-  const type1 = data.type1;
-  const type2 = data.type2;
+// Funktion zum Hinzufügen ausgewählter Pokémon zur Datenbank
+const addSelectedPokemonToDatabase = async () => {
+  if (selectedPokemonIds.length === 0) {
+    alert("Bitte wähle mindestens ein Pokémon aus.");
+    return;
+  }
 
-  const pokemonData = {
-    name: data.Name,
-    bild: data.Bild,
-    hp: data.Hp,
-    attack: data.Attack,
-    defense: data.Defense,
-    speed: data.Speed,
-    type1: type1,
-    type2: type2
-  };
+  console.log("Selected Pokémon IDs:", selectedPokemonIds); // Debugging: IDs der ausgewählten Pokémon
 
-  await fetch("pokemonIntoDatabase.php", {
+  // Array, um die ausgewählten Pokémon-Daten zu speichern
+  const selectedPokemonData = [];
+
+  // Iteriere über die IDs der ausgewählten Pokémon
+  for (const id of selectedPokemonIds) {
+    // Wandelt die ID in eine Zahl um, falls nötig, um sicherzustellen, dass der Vergleich korrekt ist
+    const pokemon = loadedPokemonData.find(p => parseInt(p.ID) === parseInt(id));
+
+    console.log(`Suche Pokémon mit ID: ${id}`, pokemon); // Debugging: Ausgabe der gesuchten ID und des gefundenen Pokémon
+    
+    if (pokemon) {
+      const pokemonData = {
+        name: pokemon.Name,
+        bild: pokemon.Bild,
+        hp: pokemon.Hp,
+        attack: pokemon.Attack,
+        defense: pokemon.Defense,
+        speed: pokemon.Speed,
+        type1: pokemon.Type1,
+        type2: pokemon.Type2
+      };
+      selectedPokemonData.push(pokemonData);
+    } else {
+      console.error(`Pokémon mit ID ${id} nicht in den geladenen Daten gefunden.`);
+    }
+  }
+
+  // Wenn keine Pokémon-Daten gefunden wurden, Fehlermeldung anzeigen
+  if (selectedPokemonData.length === 0) {
+    alert("Es konnten keine Pokémon-Daten gefunden werden.");
+    return;
+  }
+
+  // POST-Anfrage an die PHP-Datei senden
+  fetch("pokemonIntoDatabase.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ pokemonData: pokemonData })
+    body: JSON.stringify({ pokemonData: selectedPokemonData }) // Sende die Pokémon-Daten an die PHP-Datei
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      console.error("Fehler beim Hinzufügen der Pokémon:", data.error);
+      alert("Fehler beim Hinzufügen der Pokémon: " + data.error);
+    } else {
+      console.log("Pokémon erfolgreich hinzugefügt:", data.message);
+      alert("Pokémon erfolgreich hinzugefügt!");
+      selectedPokemonIds = []; // Leere die Liste nach dem Hinzufügen
+    }
+  })
+  .catch(error => {
+    console.error("Fehler beim Hinzufügen der Pokémon:", error);
+    alert("Fehler beim Hinzufügen der Pokémon.");
   });
 };
 
@@ -182,6 +226,11 @@ let styleCard = (types, card) => {
 // Event listener for adding selected Pokémon to the database
 btn.addEventListener("click", () => {
   addSelectedPokemonToDatabase(); // Example: Function to add Pokémon
+});
+
+const backBtn = document.getElementById("back-btn");
+backBtn.addEventListener("click", () => {
+  window.location.href = "main.php";
 });
 
 // Initialize the Pokémon data
