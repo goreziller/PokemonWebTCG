@@ -25,6 +25,6 @@
             <button id="back-btn">Zurück zum Hauptmenü</button>
         </div>
     </div>
-    <script src="pokemonscript.js"></script>
+    <script src="./pokemonscript.js"></script>
 </body>
 </html>

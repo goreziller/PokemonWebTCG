@@ -33,6 +33,7 @@
   max-height: 150px; /* Maximalhöhe des Bildes */
   margin: 20px auto;
   transition: transform 0.2s; /* Sanfte Übergänge für Transformationen */
+  object-fit: contain;
 }
 
 .card.selected img {

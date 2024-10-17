@@ -6,10 +6,31 @@ const navigation = document.getElementById('navigation');
 const book = document.querySelector('.book');
 const pokemonCardsContainer = document.getElementById("pokemonCardsContainer");
 
+// Farbcodes für die Typen
+const typeColors = {
+    fire: '#F08030',
+    water: '#6890F0',
+    grass: '#78C850',
+    electric: '#F8D030',
+    ice: '#98D8D8',
+    fighting: '#C03028',
+    poison: '#A040A0',
+    ground: '#E0C068',
+    flying: '#A890F0',
+    psychic: '#F85888',
+    bug: '#A8B820',
+    rock: '#B8A038',
+    ghost: '#705898',
+    dark: '#705848',
+    dragon: '#7038F8',
+    steel: '#B8B8D0',
+    fairy: '#EE99AC',
+    normal: '#A8A878'
+};
+
 // Buch öffnen
 function openBook() {
     book.classList.toggle('open');
-    // Karten nur anzeigen, wenn das Buch geöffnet ist
     if (book.classList.contains('open')) {
         loadUserPokemonCards(); // Lade die Pokémon-Karten
         updatePage();
@@ -20,7 +41,6 @@ function openBook() {
         book.querySelector('.cover-right').style.transform = 'rotateY(180deg)';
     } else {
         navigation.classList.remove('active'); // Navigation deaktivieren
-        // Buchdeckel zurücksetzen
         navigation.style.display = "none";
         book.querySelector('.cover-left').style.transform = 'rotateY(0deg)';
         book.querySelector('.cover-right').style.transform = 'rotateY(0deg)';
@@ -35,7 +55,6 @@ function updatePage() {
             page.classList.add('active');
         }
     });
-    // Buttons aktivieren/deaktivieren
     prevButton.disabled = currentPage === 0;
     nextButton.disabled = currentPage === pages.length - 1;
 }
@@ -78,52 +97,11 @@ const loadUserPokemonCards = async () => {
             return;
         }
 
-        // Container für die Pokémon-Karten
-        const pokemonCardsContainer = document.getElementById("pokemonCardsContainer");
         pokemonCardsContainer.innerHTML = ""; // Leeren Sie den Container
-
-        // appendTypes(data.types, card);
-        // styleCard(data.types, card);
-
-        // const appendTypes = (types, card) => {
-        //     const typesContainer = card.querySelector(".types");
-        //     typesContainer.innerHTML = ''; // Leere vorherige Typen
-        
-        //     // Überprüfen, ob Typen vorhanden sind
-        //     if (types.length === 0) {
-        //         typesContainer.innerHTML = '<span>Keine Typen</span>'; // Hinweis, wenn keine Typen vorhanden sind
-        //         return;
-        //     }
-        
-        //     // Typen zur Karte hinzufügen
-        //     types.forEach((item) => {
-        //         const span = document.createElement("span");
-        //         span.textContent = item.type.name.charAt(0).toUpperCase() + item.type.name.slice(1); // Erster Buchstabe groß
-        //         span.classList.add('type'); // CSS-Klasse hinzufügen für das Styling
-        //         typesContainer.appendChild(span);
-        //     });
-        // };
-        
-        // // Funktion zum Stylen der Karte basierend auf den Typen
-        // const styleCard = (types, card) => {
-        //     if (types.length === 0) {
-        //         card.style.background = '#ffffff'; // Standardfarbe, wenn keine Typen vorhanden sind
-        //         return;
-        //     }
-        
-        //     const primaryColor = typeColor[types[0].type.name];
-        //     if (types.length === 2) {
-        //         const secondaryColor = typeColor[types[1].type.name];
-        //         card.style.background = `radial-gradient(circle at 50% 0%, ${primaryColor} 36%, ${secondaryColor} 36%)`;
-        //     } else {
-        //         card.style.background = `radial-gradient(circle at 50% 0%, ${primaryColor} 36%, #ffffff 36%)`;
-        //     }
-        // };
 
         // Überprüfen, ob Pokémon-Karten vorhanden sind
         if (data.pokemonCards && data.pokemonCards.length > 0) {
             data.pokemonCards.forEach(pokemon => {
-                // Erstellen eines neuen Karten-Elements
                 const cardElement = document.createElement("div");
                 cardElement.className = "card"; // CSS-Klasse für das Styling
                 cardElement.innerHTML = 
@@ -132,7 +110,7 @@ const loadUserPokemonCards = async () => {
                         <span>HP</span>
                         ${pokemon.Hp}
                     </p>
-                    <img src=${pokemon.Bild} />
+                    <img src="${pokemon.Bild}" />
                     <h2 class="poke-name">${pokemon.Name}</h2>
                     <div class="types"></div>
                     <div class="stats">
@@ -150,18 +128,65 @@ const loadUserPokemonCards = async () => {
                         </div>
                     </div>
                 `;
+
+                // Typen zur Karte hinzufügen
+                const typeContainer = cardElement.querySelector('.types');
+                const types = []; // Array für die Typen
+
+                // Typ 1 hinzufügen
+                const type1 = document.createElement('span');
+                type1.textContent = pokemon.Type1.charAt(0).toUpperCase() + pokemon.Type1.slice(1);
+                type1.style.backgroundColor = typeColors[pokemon.Type1.toLowerCase()] || '#000'; // Fallback-Farbe
+                type1.style.color = "#fff"; // Weißer Text
+                typeContainer.appendChild(type1);
+                types.push({ type: { name: pokemon.Type1.toLowerCase() } }); // Typ in Array hinzufügen
+
+                // Typ 2 hinzufügen (falls vorhanden)
+                if (pokemon.Type2) {
+                    const type2 = document.createElement('span');
+                    type2.textContent = pokemon.Type2.charAt(0).toUpperCase() + pokemon.Type2.slice(1);
+                    type2.style.backgroundColor = typeColors[pokemon.Type2.toLowerCase()] || '#000'; // Fallback-Farbe
+                    type2.style.color = "#fff"; // Weißer Text
+                    typeContainer.appendChild(type2);
+                    types.push({ type: { name: pokemon.Type2.toLowerCase() } }); // Typ in Array hinzufügen
+                }
+
                 // Fügen Sie die Karte zum Container hinzu
                 pokemonCardsContainer.appendChild(cardElement);
+
+                // Stile der Karte basierend auf den Typen anwenden
+                styleCard(types, cardElement);
             });
         } else {
-            // Wenn keine Pokémon-Karten gefunden wurden
             pokemonCardsContainer.innerHTML = "<p>Keine Pokémon-Karten gefunden.</p>";
         }
     } catch (error) {
-        // Fehlerbehandlung
         console.error("Fehler beim Abrufen der Pokémon-Karten:", error);
         alert("Fehler beim Abrufen der Pokémon-Karten.");
     }
+};
+
+// Funktion zum Anwenden von Stilen auf die Karte
+const styleCard = (types, card) => {
+    if (types.length === 2) {
+        const primaryColor = typeColors[types[0].type.name];
+        const secondaryColor = typeColors[types[1].type.name];
+        card.style.background = `radial-gradient(circle at 50% 0%, ${primaryColor} 36%, ${secondaryColor} 36%)`;
+    } else if (types.length === 1) {
+        const primaryColor = typeColors[types[0].type.name];
+        card.style.background = `radial-gradient(circle at 50% 0%, ${primaryColor} 36%, #ffffff 36%)`;
+    } else {
+        card.style.background = `#ffffff`; // Standardfarbe für Karten ohne Typen
+    }
+
+    const typeSpans = card.querySelectorAll(".types span");
+    typeSpans.forEach((typeSpan, index) => {
+        // Überprüfen, ob der Typ vorhanden ist, bevor wir darauf zugreifen
+        if (types[index]) {
+            const color = typeColors[types[index].type.name];
+            typeSpan.style.backgroundColor = color || '#ffffff'; // Fallback auf Weiß, wenn keine Farbe vorhanden ist
+        }
+    });
 };
 
 // Rufen Sie die Funktion auf, um die Karten zu laden

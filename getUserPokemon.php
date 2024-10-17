@@ -27,9 +27,9 @@ try {
 
     $userId = $_SESSION['user-id']; // Holen Sie sich die Benutzer-ID aus der Sitzung
 
-    // SQL-Abfrage, um alle Pokémon-Karten für den Benutzer abzurufen
+    // SQL-Abfrage, um alle Pokémon-Karten für den Benutzer abzurufen, inklusive Type1 und Type2
     $stmt = $conn->prepare("
-        SELECT p.ID, p.Name, p.Bild, p.Hp, p.Attack, p.Defense, p.Speed
+        SELECT p.ID, p.Name, p.Bild, p.Hp, p.Attack, p.Defense, p.Speed, p.Type1, p.Type2
         FROM pokemon p
         JOIN benutzerpokemonkarten up ON p.id = up.PokemonKartenNr
         WHERE up.BenutzerNr = ?
@@ -40,6 +40,7 @@ try {
 
     if ($pokemonCards) 
     {
+        // Füge die Pokémon-Karten mit Typen zur Antwort hinzu
         $response['pokemonCards'] = $pokemonCards;
     } 
     else 

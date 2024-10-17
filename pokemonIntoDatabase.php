@@ -30,18 +30,23 @@ try {
     $data = json_decode(file_get_contents("php://input"), true);
     $pokemonData = $data['pokemonData']; // Erwartet ein Array von Pokémon-Daten
 
-    // SQL-Anweisung zum Einfügen von Pokémon vorbereiten
-    $stmt = $conn->prepare("INSERT INTO pokemon (name, bild, hp, attack, defense, speed) VALUES (?, ?, ?, ?, ?, ?)");
+    // SQL-Anweisung zum Einfügen von Pokémon vorbereiten, inklusive Type1 und Type2
+    $stmt = $conn->prepare("INSERT INTO pokemon (name, bild, hp, attack, defense, speed, Type1, Type2) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
     // Pokémon-Daten einfügen
     foreach ($pokemonData as $pokemon) {
+        // Fallback für Type2: wenn kein zweiter Typ existiert, setze ihn auf NULL
+        $type2 = isset($pokemon['type2']) ? $pokemon['type2'] : null;
+
         $stmt->execute([
             $pokemon['name'],
             $pokemon['bild'],
             $pokemon['hp'],
             $pokemon['attack'],
             $pokemon['defense'],
-            $pokemon['speed']
+            $pokemon['speed'],
+            $pokemon['type1'], // Typ 1 einfügen
+            $type2             // Typ 2 einfügen, kann NULL sein
         ]);
 
         // Holen Sie sich die letzte eingefügte Pokémon-ID
