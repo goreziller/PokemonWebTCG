@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="design_index.css">
+    <link rel="stylesheet" href="./css/design_index.css">
     <title>Pokemon TCG</title>
 </head>
 <body>

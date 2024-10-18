@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokemon Card Generator</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="design_packs.css" />
+    <link rel="stylesheet" href="./css/design_packs.css" />
     <style>
         <?php include("./design_packs.css")?>
     </style>
@@ -25,6 +25,6 @@
             <button id="back-btn">Zurück zum Hauptmenü</button>
         </div>
     </div>
-    <script src="./pokemonscript.js"></script>
+    <script src="./js/pokemonscript.js"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemon TCG</title>
-    <link rel="stylesheet" href="design_main.css">
+    <link rel="stylesheet" href="./css/design_main.css">
 </head>
 <body>
     <h1>Willkommen zurück, <?php include("Hauptmenü.php"); name(); ?></h1>

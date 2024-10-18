@@ -3,7 +3,7 @@
 
     $pdo = new PDO('mysql:host=localhost;dbname=spieler', 'root', '');
 
-    $Befehl = $pdo->prepare("INSERT INTO benutzer (BenutzerName, Vorname, Nachname, Geburtstag, Email, Passwort) VALUES (?, ?, ?, ?, ?, ?)");
+    $Befehl = $pdo->prepare("INSERT INTO benutzer (BenutzerName, Vorname, Nachname, Geburtstag, Email, Passwort, Coins) VALUES (?, ?, ?, ?, ?, ?, ?)");
     
     $Benutzer = $_POST["benutzername"];
     $Vorname = $_POST["vorname"];
@@ -17,8 +17,7 @@
 
     if($Passwort == $PasswortAgain)
     {
-        $Befehl->execute(array($Benutzer, $Vorname, $Nachname, $Geburtstag, $Email, password_hash($Passwort, PASSWORD_DEFAULT)));
-        $_SESSION["user-id"] = "Select MAX(id) as ID from benutzer";
-        header('Location: main.php');
+        $Befehl->execute(array($Benutzer, $Vorname, $Nachname, $Geburtstag, $Email, password_hash($Passwort, PASSWORD_DEFAULT), 500));
+        header('Location: index.php');
     }
 ?>

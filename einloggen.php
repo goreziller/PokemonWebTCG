@@ -16,11 +16,16 @@
             $Geburtstag = $row['Geburtstag'];
             $Email = $row['Email'];
             $Passwort = $row['Passwort'];
+            $_SESSION["coins"] = $row['Coins'];
         }
 
         if(password_verify($EnteredPW, $Passwort) && $EnteredBenutzer == $Benutzer)
         {
             header('Location: main.php');
             $_SESSION["user-id"] = $ID;
+        }
+        else
+        {
+            header('Location: index.php');
         }
 ?>

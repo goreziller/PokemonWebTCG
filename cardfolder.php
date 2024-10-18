@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon Kartenbuch</title>
-    <link rel="stylesheet" href="./design_cardfolder.css">
+    <link rel="stylesheet" href="./css/design_cardfolder.css">
 </head>
 <body>
     <div class="book" onclick="openBook()">
@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<script src="./cardfolderscript.js"></script>
+<script src="./js/cardfolderscript.js"></script>
 
 </body>
 </html>
