@@ -54,7 +54,7 @@ body {
   top: 0;
   left: 0;
   width: 1150px; /* Breite des Buches */
-  height: 1100px; /* Höhe des Buches */
+  height: 1150px; /* Höhe des Buches */
   background-color: #fff;
   transform-style: preserve-3d;
   transform: translateZ(-1px);
@@ -155,7 +155,10 @@ body {
 .navigation {
   display: none;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 10px;
+  position: absolute;
+  bottom: -150px;
+  left: 175px;
 }
 
 .nav-button {
@@ -168,6 +171,7 @@ body {
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s;
+  width: 250px;
 }
 
 .nav-button:hover {

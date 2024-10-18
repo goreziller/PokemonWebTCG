@@ -18,6 +18,10 @@
     {
         openshop();
     }
+    else if(array_key_exists('logout', $_POST))
+    {
+        logout();
+    }
 
     function openfolder() 
     {
@@ -32,5 +36,11 @@
     function openshop()
     {
         header('Location: shop.php');
+    }
+
+    function logout()
+    {
+        session_destroy();
+        header('Location: index.php');
     }
 ?>

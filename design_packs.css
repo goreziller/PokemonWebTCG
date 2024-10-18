@@ -19,6 +19,7 @@
   justify-content: space-between; /* Platz zwischen den Elementen */
   cursor: pointer; /* Zeige an, dass die Karte klickbar ist */
   transition: transform 0.2s; /* Sanfte Übergänge für Transformationen */
+  border: 6px solid;
 }
 
 .card.selected {

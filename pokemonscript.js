@@ -1,4 +1,5 @@
-const typeColor = {
+const typeColor = 
+{
   normal: "#a8a77a",
   grass: "#7ac74c",
   fire: "#ee8130",
@@ -19,7 +20,45 @@ const typeColor = {
   dark: "#705746",
 };
 
-const legendaryPokemonNames = [
+const raritys = 
+{
+  common: 0.4,
+  uncommon: 0.3,
+  rare: 0.15,
+  epic: 0.1,
+  legendary: 0.05
+};
+
+const rarityStyles = 
+{
+  common: 
+  {
+    borderColor: "#bebebe",
+  },
+  uncommon: {
+    borderColor: "#00ff00", 
+  },
+  rare:{
+    borderColor: "#f0f8ff"
+  },
+  epic: {
+    borderColor: "#a020f0",
+  },
+  legendary: 
+  {
+    borderColor: "#ffffe0",
+  }
+};
+
+const epicPokemonNames = 
+[
+  "mew", "celebi", "jirachi", "deoxys-normal", "manaphy", "phione", "darkrai", "shaymin", "arceus",
+  "victini", "keldeo", "meloetta", "genesect", "diancie", "hoopa", "volcanion", "magearna", "marshadow",
+  "zeraora", "meltan", "melmetal", "zarude"
+]
+
+const legendaryPokemonNames = 
+[
   "articuno", "zapdos", "moltres", "mewtwo", "mew", "raikou", "entei", "suicune", "lugia", "ho-oh",
   "regirock", "regice", "registeel", "latios", "latias", "kyogre", "groudon", "rayquaza",
   "uxie", "mesprit", "azelf", "dialga", "palkia", "heatran", "giratina", "cresselia", "regigigas",
@@ -30,60 +69,83 @@ const legendaryPokemonNames = [
 ];
 
 const btn = document.getElementById("btn");
-let selectedPokemonIds = []; // Array to store selected Pokémon IDs
-let loadedPokemonData = []; // Hier werden die geladenen Pokémon-Daten gespeichert
+let selectedPokemonIds = [];
+let loadedPokemonData = []; 
 
-// Function to fetch Pokémon data from the database
-let getPokeData = async () => {
+const getPokemonRarity = (pokemon) => 
+{
+  if(epicPokemonNames.includes(pokemon.Name.toLowerCase()))
+  {
+    return 'epic';
+  }
+  else if (legendaryPokemonNames.includes(pokemon.Name.toLowerCase())) 
+  {
+    return 'legendary';
+  }
+  
+  return 'common'; // Standardrarität
+};
+
+let getPokeData = async () =>
+{
   const cardContainer = document.getElementById("card-container");
-  cardContainer.innerHTML = ''; // Clear the card container
+  cardContainer.innerHTML = '';
 
-  try {
-    const response = await fetch("getPokemonData.php"); // API endpoint
+  try 
+  {
+    const response = await fetch("getPokemonData.php");
     const data = await response.json();
 
-    // Log the fetched data for verification
     console.log("Fetched Pokémon data: ", data);
 
-    // Check if the fetched data is an array
-    if (data && Array.isArray(data)) {
+    if (data && Array.isArray(data)) 
+    {
       loadedPokemonData = data;
-      data.forEach(pokemon => {
-        if (pokemon) {
-          generateCard(pokemon); // Generate a card for each Pokémon
-        } else {
+      data.forEach(pokemon => 
+      {
+        if (pokemon) 
+        {
+          generateCard(pokemon);
+        } 
+        else 
+        {
           console.error("Invalid Pokémon data:", pokemon);
         }
       });
-    } else {
+    } 
+    else 
+    {
       console.error("Failed to fetch Pokémon data.");
     }
-  } catch (error) {
+  } 
+  catch (error) 
+  {
     console.error("Error fetching data:", error);
   }
 };
 
-// Funktion zum Hinzufügen ausgewählter Pokémon zur Datenbank
-const addSelectedPokemonToDatabase = async () => {
-  if (selectedPokemonIds.length === 0) {
+const addSelectedPokemonToDatabase = async () => 
+{
+  if (selectedPokemonIds.length === 0) 
+  {
     alert("Bitte wähle mindestens ein Pokémon aus.");
     return;
   }
 
-  console.log("Selected Pokémon IDs:", selectedPokemonIds); // Debugging: IDs der ausgewählten Pokémon
+  console.log("Selected Pokémon IDs:", selectedPokemonIds);
 
-  // Array, um die ausgewählten Pokémon-Daten zu speichern
   const selectedPokemonData = [];
 
-  // Iteriere über die IDs der ausgewählten Pokémon
-  for (const id of selectedPokemonIds) {
-    // Wandelt die ID in eine Zahl um, falls nötig, um sicherzustellen, dass der Vergleich korrekt ist
+  for (const id of selectedPokemonIds) 
+  {
     const pokemon = loadedPokemonData.find(p => parseInt(p.ID) === parseInt(id));
 
-    console.log(`Suche Pokémon mit ID: ${id}`, pokemon); // Debugging: Ausgabe der gesuchten ID und des gefundenen Pokémon
+    console.log(`Suche Pokémon mit ID: ${id}`, pokemon);
     
-    if (pokemon) {
-      const pokemonData = {
+    if (pokemon) 
+    {
+      const pokemonData = 
+      {
         name: pokemon.Name,
         bild: pokemon.Bild,
         hp: pokemon.Hp,
@@ -94,61 +156,71 @@ const addSelectedPokemonToDatabase = async () => {
         type2: pokemon.Type2
       };
       selectedPokemonData.push(pokemonData);
-    } else {
+    } 
+    else 
+    {
       console.error(`Pokémon mit ID ${id} nicht in den geladenen Daten gefunden.`);
     }
   }
 
-  // Wenn keine Pokémon-Daten gefunden wurden, Fehlermeldung anzeigen
-  if (selectedPokemonData.length === 0) {
+  if (selectedPokemonData.length === 0) 
+  {
     alert("Es konnten keine Pokémon-Daten gefunden werden.");
     return;
   }
 
-  // POST-Anfrage an die PHP-Datei senden
-  fetch("pokemonIntoDatabase.php", {
+  fetch("pokemonIntoDatabase.php", 
+  {
     method: "POST",
-    headers: {
+    headers: 
+    {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ pokemonData: selectedPokemonData }) // Sende die Pokémon-Daten an die PHP-Datei
+    body: JSON.stringify({ pokemonData: selectedPokemonData })
   })
   .then(response => response.json())
-  .then(data => {
-    if (data.error) {
+  .then(data => 
+  {
+    if (data.error) 
+    {
       console.error("Fehler beim Hinzufügen der Pokémon:", data.error);
       alert("Fehler beim Hinzufügen der Pokémon: " + data.error);
-    } else {
+    } 
+    else
+    {
       console.log("Pokémon erfolgreich hinzugefügt:", data.message);
       alert("Pokémon erfolgreich hinzugefügt!");
-      selectedPokemonIds = []; // Leere die Liste nach dem Hinzufügen
+      selectedPokemonIds = [];
     }
   })
-  .catch(error => {
+  .catch(error => 
+  {
     console.error("Fehler beim Hinzufügen der Pokémon:", error);
     alert("Fehler beim Hinzufügen der Pokémon.");
   });
 };
 
-// Generate the Pokémon card
-let generateCard = (data) => {
-  const hp = data.Hp || "N/A"; // Check if HP exists
-  const imgSrc = data.Bild || "default-image.png"; // Use the 'Bild' property or a placeholder
-  const pokeName = data.Name || "Unknown Pokémon"; // Use the 'Name' property or a fallback
+let generateCard = (data) => 
+{
+  const hp = data.Hp || "N/A"; 
+  const imgSrc = data.Bild || "default-image.png"; 
+  const pokeName = data.Name || "Unknown Pokémon";
   const statAttack = data.Attack || "N/A";
   const statDefense = data.Defense || "N/A";
   const statSpeed = data.Speed || "N/A";
-  const pokeID = data.ID || "N/A"; // Add the ID as well
 
-  // Create a new card element
+  const rarity = getPokemonRarity(data); // Rarität des Pokémon bestimmen
+
   const card = document.createElement("div");
   card.classList.add("card");
 
-  if (legendaryPokemonNames.includes(pokeName.toLowerCase())) {
-    card.classList.add("rainbow-box"); // Add rainbow-box class for legendary Pokémon
+  card.style.borderColor = rarityStyles[rarity].borderColor;
+
+  if (legendaryPokemonNames.includes(pokeName.toLowerCase())) 
+  {
+    card.classList.add("rainbow-box");
   }
 
-  // Set the inner HTML of the card
   card.innerHTML = `
     <p class="hp">
       <span>HP</span>
@@ -173,45 +245,49 @@ let generateCard = (data) => {
     </div>
   `;
 
-  // Add types and styling
-  const types = [data.Type1, data.Type2].filter(Boolean); // Filter out null or empty values
+  const types = [data.Type1, data.Type2].filter(Boolean);
   appendTypes(types, card);
   styleCard(types, card);
 
-  // Add a click event listener to the card
-  card.addEventListener("click", () => {
-    card.classList.toggle("selected"); // Toggle the selected state
-    const pokemonId = data.ID; // Use the ID from the data
-    if (card.classList.contains("selected")) {
-      selectedPokemonIds.push(pokemonId); // Add ID to the list
-    } else {
-      selectedPokemonIds = selectedPokemonIds.filter(id => id !== pokemonId); // Remove ID from the list
+  card.addEventListener("click", () => 
+  {
+    card.classList.toggle("selected"); 
+    const pokemonId = data.ID; 
+    if (card.classList.contains("selected")) 
+    {
+      selectedPokemonIds.push(pokemonId); 
+    } 
+    else 
+    {
+      selectedPokemonIds = selectedPokemonIds.filter(id => id !== pokemonId);
     }
   });
 
-  // Append the new card to the card container
   document.getElementById("card-container").appendChild(card);
 };
 
-
-// Function to append types to the card
-let appendTypes = (types, card) => {
+let appendTypes = (types, card) => 
+{
   const typesContainer = card.querySelector(".types");
-  typesContainer.innerHTML = ''; // Clear previous types
-  types.forEach((item) => {
+  typesContainer.innerHTML = ''; 
+  types.forEach((item) => 
+  {
     let span = document.createElement("SPAN");
-    span.textContent = item; // Set the type
+    span.textContent = item; 
     typesContainer.appendChild(span);
   });
 };
 
-// Function to style the card based on the Pokémon's types
-let styleCard = (types, card) => {
-  if (types.length === 2) {
+let styleCard = (types, card) => 
+{
+  if (types.length === 2) 
+  {
     const primaryColor = typeColor[types[0].toLowerCase()];
     const secondaryColor = typeColor[types[1].toLowerCase()];
     card.style.background = `radial-gradient(circle at 50% 0%, ${primaryColor} 36%, ${secondaryColor} 36%)`;
-  } else {
+  } 
+  else 
+  {
     const primaryColor = typeColor[types[0].toLowerCase()];
     card.style.background = `radial-gradient(circle at 50% 0%, ${primaryColor} 36%, #ffffff 36%)`;
   }
@@ -223,15 +299,15 @@ let styleCard = (types, card) => {
   });
 };
 
-// Event listener for adding selected Pokémon to the database
-btn.addEventListener("click", () => {
-  addSelectedPokemonToDatabase(); // Example: Function to add Pokémon
+btn.addEventListener("click", () => 
+{
+  addSelectedPokemonToDatabase(); 
 });
 
 const backBtn = document.getElementById("back-btn");
-backBtn.addEventListener("click", () => {
+backBtn.addEventListener("click", () => 
+{
   window.location.href = "main.php";
 });
 
-// Initialize the Pokémon data
 getPokeData();
