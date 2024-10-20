@@ -22,11 +22,11 @@ const typeColor =
 
 const raritys = 
 {
-  common: 0.4,
-  uncommon: 0.3,
-  rare: 0.15,
-  epic: 0.1,
-  legendary: 0.05
+  common: 0.5, //Common 50%
+  uncommon: 0.25, //Uncommon 25%
+  rare: 0.15, //Rare 15%
+  epic: 0.08,  //Epic 8%
+  legendary: 0.02 //Legendary 2%
 };
 
 const rarityStyles = 
@@ -36,17 +36,17 @@ const rarityStyles =
     borderColor: "#bebebe",
   },
   uncommon: {
-    borderColor: "#00ff00", 
+    borderColor: "#1eff00", 
   },
   rare:{
-    borderColor: "#f0f8ff"
+    borderColor: "#0070dd"
   },
   epic: {
-    borderColor: "#a020f0",
+    borderColor: "#a335ee",
   },
   legendary: 
   {
-    borderColor: "#ffffe0",
+    borderColor: "#ff8000",
   }
 };
 
@@ -71,6 +71,7 @@ const legendaryPokemonNames =
 const btn = document.getElementById("btn");
 let selectedPokemonIds = [];
 let loadedPokemonData = []; 
+let rarity;
 
 const getPokemonRarity = (pokemon) => 
 {
@@ -82,8 +83,29 @@ const getPokemonRarity = (pokemon) =>
   {
     return 'legendary';
   }
-  
-  return 'common'; // Standardrarität
+  const random = Math.random();
+
+  if (random < raritys.legendary) 
+  {
+    return 'legendary'; // Extrem selten, aber hier nur zur Sicherheit
+  } 
+  else if (random < raritys.epic + raritys.legendary) 
+  {
+    return 'epic'; // Episch, aber selten
+  } 
+  else if (random < raritys.rare + raritys.epic + raritys.legendary) 
+  {
+    return 'rare'; // Selten
+  } 
+  else if 
+  (random < raritys.uncommon + raritys.rare + raritys.epic + raritys.legendary) 
+  {
+    return 'uncommon'; // Ungewöhnlich
+  } 
+  else 
+  {
+    return 'common'; // Standardmäßig häufig
+  }
 };
 
 let getPokeData = async () =>
@@ -153,7 +175,8 @@ const addSelectedPokemonToDatabase = async () =>
         defense: pokemon.Defense,
         speed: pokemon.Speed,
         type1: pokemon.Type1,
-        type2: pokemon.Type2
+        type2: pokemon.Type2,
+        rarity: getPokemonRarity(pokemon)
       };
       selectedPokemonData.push(pokemonData);
     } 
@@ -209,7 +232,7 @@ let generateCard = (data) =>
   const statDefense = data.Defense || "N/A";
   const statSpeed = data.Speed || "N/A";
 
-  const rarity = getPokemonRarity(data); // Rarität des Pokémon bestimmen
+  rarity = getPokemonRarity(data);
 
   const card = document.createElement("div");
   card.classList.add("card");

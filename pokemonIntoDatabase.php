@@ -1,42 +1,56 @@
 <?php
-session_start(); // Starten Sie die Sitzung, um auf die Benutzer-ID zuzugreifen
+session_start(); 
 
-$servername = "localhost"; // oder die IP-Adresse Ihres Servers
-$username = "root"; // Ihr MySQL-Benutzername
-$password = ""; // Ihr MySQL-Passwort
-$dbname = "spieler"; // Der Name Ihrer Datenbank
+$servername = "localhost"; 
+$username = "root"; 
+$password = ""; 
+$dbname = "spieler"; 
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-header('Content-Type: application/json'); // Setzen Sie den Header für JSON-Antworten
+header('Content-Type: application/json');
 
-$response = []; // Array für die Antwort
+$response = [];
 
-try {
+try 
+{
     $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Überprüfen Sie, ob der Benutzer angemeldet ist
-    if (!isset($_SESSION['user-id'])) {
+    
+    if (!isset($_SESSION['user-id'])) 
+    {
         $response['error'] = "Benutzer nicht angemeldet.";
         echo json_encode($response);
         exit;
     }
 
-    $userId = $_SESSION['user-id']; // Holen Sie sich die Benutzer-ID aus der Sitzung
+    $userId = $_SESSION['user-id'];
 
     // Empfangen Sie die POST-Daten
     $data = json_decode(file_get_contents("php://input"), true);
-    $pokemonData = $data['pokemonData']; // Erwartet ein Array von Pokémon-Daten
+    $pokemonData = $data['pokemonData'];
 
-    // SQL-Anweisung zum Einfügen von Pokémon vorbereiten, inklusive Type1 und Type2
-    $stmt = $conn->prepare("INSERT INTO pokemon (name, Bild, Hp, Attack, Defense, Speed, Type1, Type2) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    if (empty($pokemonData)) 
+    {
+        $response['error'] = "Keine Pokémon-Daten empfangen.";
+        echo json_encode($response);
+        exit;
+    }
 
-    // Pokémon-Daten einfügen
-    foreach ($pokemonData as $pokemon) {
-        // Fallback für Type2: wenn kein zweiter Typ existiert, setze ihn auf NULL
+    $stmt = $conn->prepare("INSERT INTO pokemon (name, Bild, Hp, Attack, Defense, Speed, Type1, Type2, Rarity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    foreach ($pokemonData as $pokemon) 
+    {
         $type2 = isset($pokemon['type2']) ? $pokemon['type2'] : null;
+
+        if (!isset($pokemon['rarity'])) 
+        {
+            $response['error'] = "Rarität für Pokémon '" . $pokemon['name'] . "' nicht gefunden.";
+            echo json_encode($response);
+            exit;
+        }
 
         $stmt->execute([
             $pokemon['name'],
@@ -45,18 +59,16 @@ try {
             $pokemon['attack'],
             $pokemon['defense'],
             $pokemon['speed'],
-            $pokemon['type1'], // Typ 1 einfügen
-            $type2             // Typ 2 einfügen, kann NULL sein
+            $pokemon['type1'], 
+            $type2,            
+            $pokemon['rarity'] 
         ]);
 
-        // Holen Sie sich die letzte eingefügte Pokémon-ID
         $pokemonId = $conn->lastInsertId();
 
-        // Debugging-Informationen sammeln
         $response['userId'] = $userId;
         $response['pokemonId'] = $pokemonId;
 
-        // Beziehung in der Zwischentabelle herstellen
         $stmtRelation = $conn->prepare("INSERT INTO benutzerpokemonkarten (BenutzerNr, PokemonKartenNr) VALUES (?, ?)");
         $stmtRelation->execute([$userId, $pokemonId]);
     }
