@@ -1,0 +1,51 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+h1
+{
+    text-align: center;
+}
+.pokemon-grid 
+{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    flex: 1;
+}
+.pokemon-item 
+{
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+.button-container 
+{
+    margin-top: 10px;
+    display: flex; 
+    justify-content: center;
+    gap: 10px; 
+}
+.button-container button
+{
+    padding: 5px 10px;
+}
+.back-button 
+{
+    display: inline-block;
+    text-align: center; 
+    margin: 20px auto; 
+    padding: 10px 20px;
+    background-color: #4CAF50; 
+    color: white; 
+    text-decoration: none; 
+    border: none; 
+    border-radius: 5px; 
+    font-weight: bold; 
+    cursor: pointer; 
+}
+.back-button:hover 
+{
+    background-color: #45a049; 
+}
