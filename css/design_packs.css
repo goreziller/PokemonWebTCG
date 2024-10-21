@@ -1,47 +1,53 @@
-.card-container {
+.card-container 
+{
   display: flex;
-  flex-wrap: wrap; /* Erlaubt das Umbrechen der Karten */
-  justify-content: center; /* Zentriert die Karten */
-  gap: 20px; /* Abstand zwischen den Karten */
+  flex-wrap: wrap; 
+  justify-content: center; 
+  gap: 20px;
 }
 
-.card {
+.card 
+{
   border-style: solid;
   border-color: black;
   position: relative;
   width: 300px;
-  height: 450px; /* Feste Höhe für die Karten */
+  height: 450px; 
   padding: 30px 20px;
   box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   display: flex;
-  flex-direction: column; /* Vertikale Anordnung der Inhalte */
-  justify-content: space-between; /* Platz zwischen den Elementen */
-  cursor: pointer; /* Zeige an, dass die Karte klickbar ist */
-  transition: transform 0.2s; /* Sanfte Übergänge für Transformationen */
+  flex-direction: column; 
+  justify-content: space-between; 
+  cursor: pointer; 
+  transition: transform 0.2s; 
   border: 6px solid;
 }
 
-.card.selected {
-  border: 2px solid #f06d16; /* Beispiel für eine Markierung */
-  box-shadow: 0 0 15px rgba(192, 23, 11, 0.5); /* Schatten für den markierten Zustand */
-  transform: scale(1.03); /* Vergrößert die gesamte Karte leicht bei Markierung */
+.card.selected 
+{
+  border: 2px solid #f06d16; 
+  box-shadow: 0 0 15px rgba(192, 23, 11, 0.5); 
+  transform: scale(1.03);
 }
 
-.card img {
+.card img 
+{
   display: block;
-  width: 100%; /* Bildbreite anpassen */
-  max-height: 150px; /* Maximalhöhe des Bildes */
+  width: 100%;
+  max-height: 150px;
   margin: 20px auto;
-  transition: transform 0.2s; /* Sanfte Übergänge für Transformationen */
+  transition: transform 0.2s;
   object-fit: contain;
 }
 
-.card.selected img {
-  transform: scale(1.08); /* Vergrößert das Bild bei Markierung */
+.card.selected img 
+{
+  transform: scale(1.08);
 }
 
-.hp {
+.hp 
+{
   width: 80px;
   background-color: #ffffff;
   text-align: center;
@@ -51,55 +57,63 @@
   font-weight: 400;
 }
 
-.poke-name {
+.poke-name 
+{
   text-align: center;
   font-weight: 600;
 }
 
-.types {
+.types 
+{
   display: flex;
   justify-content: space-around;
   margin: 20px 0;
 }
 
 .hp span,
-.types span {
+.types span 
+{
   font-size: 12px;
   letter-spacing: 0.4px;
   font-weight: 600;
 }
 
-.types span {
-  padding: 5px 10px; /* Padding anpassen, um die Größe zu reduzieren */
+.types span 
+{
+  padding: 5px 10px;
   border-radius: 20px;
   color: #ffffff;
   border-style: solid;
   border-color: black;
 }
 
-.stats {
+.stats 
+{
   display: flex;
   align-items: center;
   justify-content: space-between;
   text-align: center;
 }
 
-.stats p {
+.stats p 
+{
   color: black;
 }
 
-.rainbow-box {
-  border: 5px solid transparent; /* Transparenter Rand für den Farbverlauf */
+.rainbow-box 
+{
+  border: 5px solid transparent;
   border-image: linear-gradient(to bottom right, #b827fc, #2c90fc, #b8fd33, #fec837, #fd1892);
-  border-image-slice: 1; /* Stellt sicher, dass der Farbverlauf den Rand füllt */
-  height: 450px; /* Feste Höhe für die Karten */
-  width: 300px; /* Feste Breite für die Karten */
-  position: relative; /* Positionierung für das Bild und den Inhalt */
-  overflow: hidden; /* Verhindert, dass der Inhalt über den Rand hinausgeht */
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); /* Weicher Schatten für den Holo-Effekt */
+  border-image-slice: 1; 
+  height: 450px; 
+  width: 300px; 
+  position: relative; 
+  overflow: hidden; 
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
-.rainbow-box::before {
+.rainbow-box::before 
+{
   content: '';
   position: absolute;
   top: -50%;
@@ -108,68 +122,80 @@
   bottom: -50%;
   background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 60%);
   transform: rotate(-30deg);
-  pointer-events: none; /* Verhindert, dass das Pseudo-Element die Interaktion mit der Karte blockiert */
-  animation: shine 1.5s infinite; /* Animation für den Glanz */
+  pointer-events: none;
+  animation: shine 1.5s infinite;
 }
 
-@keyframes shine {
-  0% {
+@keyframes shine 
+{
+  0% 
+  {
       transform: translate(-100%, -100%) rotate(-30deg);
   }
-  100% {
+  100% 
+  {
       transform: translate(100%, 100%) rotate(-30deg);
   }
 }
 
-/* Medienabfragen für responsives Design */
-@media (max-width: 1024px) {
-  .card {
-      width: 45%; /* Breite für Tablets */
+@media (max-width: 1024px) 
+{
+  .card 
+  {
+      width: 45%;
   }
 }
 
-@media (max-width: 768px) {
-  .card {
-      width: 90%; /* Breite für Smartphones */
+@media (max-width: 768px) 
+{
+  .card 
+  {
+      width: 90%;
   }
 }
 
-.title-image {
-  width: 25%; /* Bild nimmt 100% der Breite des Containers ein */
-  height: auto; /* Höhe wird automatisch angepasst */
-  display: block; /* Block-Element für das Bild */
-  margin: 0 auto; /* Zentriert das Bild */
+.title-image 
+{
+  width: 25%;
+  height: auto;
+  display: block; 
+  margin: 0 auto; 
 }
 
-.button-container {
-  display: flex; /* Flexbox verwenden */
-  justify-content: center; /* Zentriert die Buttons */
-  margin-top: 20px; /* Abstand nach oben */
+.button-container 
+{
+  display: flex; 
+  justify-content: center;
+  margin-top: 20px;
 }
 
-.button-container {
-  display: flex; /* Flexbox verwenden */
-  justify-content: center; /* Zentriert die Buttons */
-  margin-top: 20px; /* Abstand nach oben */
+.button-container 
+{
+  display: flex;
+  justify-content: center; 
+  margin-top: 20px;
 }
 
-.button-container button {
-  flex: 1; /* Erlaubt den Buttons, gleichmäßig zu wachsen */
-  margin: 0 10px; /* Abstand zwischen den Buttons */
-  padding: 15px 0; /* Innenabstand für die Buttons */
-  font-size: 18px; /* Schriftgröße */
-  background-color: #101010; /* Hintergrundfarbe */
-  color: #ffffff; /* Textfarbe */
-  border: none; /* Kein Rand */
-  border-radius: 5px; /* Abgerundete Ecken */
-  cursor: pointer; /* Zeige an, dass die Buttons klickbar sind */
-  transition: background-color 0.3s; /* Sanfter Übergang für die Hintergrundfarbe */
+.button-container button 
+{
+  flex: 1; 
+  margin: 0 10px; 
+  padding: 15px 0;
+  font-size: 18px;
+  background-color: #101010; 
+  color: #ffffff; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
 }
 
-.button-container button:hover {
-  background-color: #202020; /* Hintergrundfarbe bei Hover-Effekt */
+.button-container button:hover 
+{
+  background-color: #202020;
 }
 
-.button-container button:hover {
-  background-color: #202020; /* Hintergrundfarbe bei Hover-Effekt */
+.button-container button:hover 
+{
+  background-color: #202020;
 }

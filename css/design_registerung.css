@@ -73,9 +73,9 @@ input[type="submit"]:hover
     position: absolute;
     right: 10px;
     top: 50%;
-    transform: translateY(-50%); /* Vertikale Zentrierung */
+    transform: translateY(-50%); 
     cursor: pointer;
-    user-select: none; /* Verhindert das Markieren des Textes */
-    font-size: 18px; /* Größe des Augensymbols */
-    color: #777; /* Farbe des Augensymbols */
+    user-select: none; 
+    font-size: 18px; 
+    color: #777; 
 }

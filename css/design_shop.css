@@ -3,31 +3,40 @@ h1
     text-align: center;
 }
 
-.container {
+.container 
+{
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.row {
+
+.row 
+{
     display: flex;
     gap: 10px;
 }
-.item {
-    display: flex; /* Flexbox aktivieren */
-    flex-direction: column; /* Inhalte untereinander anordnen */
-    justify-content: center; /* Vertikale Zentrierung */
-    align-items: center; /* Horizontale Zentrierung */
+
+.item 
+{
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
     background-color: #f0f0f0;
     text-align: center;
     padding: 10px;
     border: 1px solid #ccc;
     flex: 1;
 }
-.item img {
+
+.item img 
+{
     max-width: 100%;
     height: auto;
 }
-.item button {
+
+.item button 
+{
     margin-top: 10px;
     padding: 5px 10px;
     background-color: #4CAF50;

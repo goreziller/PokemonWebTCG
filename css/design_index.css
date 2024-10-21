@@ -5,7 +5,8 @@ html
     background-size: cover;
 }
 
-body {
+body 
+{
     font-family: 'Arial', sans-serif;
     display: flex;
     flex-direction: column;
@@ -15,7 +16,8 @@ body {
     margin: 0;
 }
 
-h1 {
+h1 
+{
     text-align: center;
     color: #ffcc00; /* Pokémon-Farbe */
     font-size: 2.5em;
@@ -26,7 +28,8 @@ h1 {
     background-color: blue;
 }
 
-.container {
+.container 
+{
     background-color: white;
     padding: 30px;
     border-radius: 10px;
@@ -34,14 +37,16 @@ h1 {
     width: 350px;
 }
 
-h2 {
+h2 
+{
     text-align: center;
     margin-bottom: 20px;
     color: #333;
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"] 
+{
     width: 100%;
     padding: 15px;
     margin: 10px 0;
@@ -51,7 +56,8 @@ input[type="password"] {
     font-size: 1em;
 }
 
-input[type="submit"] {
+input[type="submit"] 
+{
     width: 100%;
     padding: 15px;
     margin-top: 10px;
@@ -64,20 +70,24 @@ input[type="submit"] {
     transition: background-color 0.3s;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover 
+{
     background-color: #0056b3;
 }
 
-p {
+p 
+{
     text-align: center;
     margin-top: 15px;
 }
 
-a {
+a 
+{
     color: #007bff;
     text-decoration: none;
 }
 
-a:hover {
+a:hover 
+{
     text-decoration: underline;
 }
