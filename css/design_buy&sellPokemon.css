@@ -118,3 +118,15 @@ p, h1
 {
     text-align: center
 }
+#chart-container {
+    display: none;
+    position: fixed; /* Ändere von absolute zu fixed */
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.8); /* Optional: Hintergrundfarbe */
+    border-radius: 8px; /* Optional: Abrundung der Ecken */
+    padding: 10px; /* Optional: Innenabstand */
+}
+#priceChart {
+    background-color: black;
+    border: 1px solid red; /* Temporärer Rand, um sicherzustellen, dass der Canvas sichtbar ist */
+}

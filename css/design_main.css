@@ -77,3 +77,8 @@ button:hover
 {
     background-color: rgb(182, 65, 65);
 }
+
+.logout
+{
+    margin: 25px;
+}

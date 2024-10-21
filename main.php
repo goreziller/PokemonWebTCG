@@ -23,7 +23,7 @@
                 <button name="openshop">Zum Kartenmarkt</button>
             </div>
         </div>
-        <button name="logout">Ausloggen</button>
+        <button class="logout" name="logout">Ausloggen</button>
     </form>
 </body>
 </html>

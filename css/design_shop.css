@@ -44,3 +44,26 @@ h1
     border: none;
     cursor: pointer;
 }
+
+.center-button 
+{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.back-button 
+{
+    padding: 10px 20px; 
+    font-size: 16px; 
+    color: white; 
+    background-color: #4CAF50;; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer;
+}
+
+.back-button:hover 
+{
+    background-color: #0056b3; 
+}

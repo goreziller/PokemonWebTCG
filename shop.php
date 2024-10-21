@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flexbox mit unterschiedlichen Spalten</title>
+    <title>Pokemonkarten Shop</title>
     <link rel="stylesheet" href="./css/design_shop.css">
 </head>
 <body>
@@ -60,6 +60,9 @@
             </div>
         </div>
     </div>
-</from>
+</form>
+<div class="center-button">
+    <button onclick="window.location.href='main.php'" class="back-button">Zurück zur Hauptseite</button>
+</div>
 </body>
 </html>

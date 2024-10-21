@@ -1,6 +1,21 @@
 <?php
 $pokemonArray = [];
 
+function generateRandomPrices($basePrice, $numDays) 
+{
+    $prices = [];
+    $price = $basePrice;
+
+    for ($i = 0; $i < $numDays; $i++) 
+    {
+        $priceChange = rand(-5, 8);
+        $price = max(1, $price + $priceChange); 
+        $prices[] = $price;
+    }
+
+    return $prices;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') 
 {
     $host = 'localhost';
@@ -30,6 +45,61 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
     $conn->close();
 }
+
+$basePrices = 
+[
+    'common' => 10,
+    'uncommon' => 20,
+    'rare' => 30,
+    'epic' => 50,
+    'legendary' => 75,
+];
+
+$rarityKeys = array_keys($basePrices);
+
+$priceData = [];
+if (!empty($pokemonArray)) {
+    $pokemon = $pokemonArray[0];
+    foreach ($rarityKeys as $rarity) 
+    {
+        $basePrice = $basePrices[$rarity];
+
+        $priceData[strtolower($pokemon['Name']) . '_' . strtolower($rarity)] = generateRandomPrices($basePrice, 30);
+    }
+}
+
+$typeColor = 
+[
+    'normal' => "#a8a77a",
+    'grass' => "#7ac74c",
+    'fire' => "#ee8130",
+    'water' => "#6390f0",
+    'bug' => "#a6b91a",
+    'dragon' => "#6f35fc",
+    'electric' => "#f7d02c",
+    'fairy' => "#d685ad",
+    'fighting' => "#c22e28",
+    'flying' => "#a98ff3",
+    'ground' => "#e2bf65",
+    'ghost' => "#735797",
+    'ice' => "#96d9d6",
+    'poison' => "#a33ea1",
+    'psychic' => "#f95587",
+    'rock' => "#b6a136",
+    'steel' => "#b7b7ce",
+    'dark' => "#705746",
+];
+
+function getBackgroundColor($type1, $type2, $type_colors) 
+{
+    $color1 = $type_colors[$type1] ?? '#FFFFFF'; 
+    if ($type2) 
+    {
+        $color2 = $type_colors[$type2] ?? '#FFFFFF'; 
+        return "background: linear-gradient(to right, $color1, $color2);";
+    }
+    return "background-color: $color1;";
+}
 ?>
 
 <!DOCTYPE html>
@@ -54,61 +124,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 'legendary' => ['borderColor' => "#ff8000"],
             ];
 
-            $typeColor = 
-            [
-                'normal' => "#a8a77a",
-                'grass' => "#7ac74c",
-                'fire' => "#ee8130",
-                'water' => "#6390f0",
-                'bug' => "#a6b91a",
-                'dragon' => "#6f35fc",
-                'electric' => "#f7d02c",
-                'fairy' => "#d685ad",
-                'fighting' => "#c22e28",
-                'flying' => "#a98ff3",
-                'ground' => "#e2bf65",
-                'ghost' => "#735797",
-                'ice' => "#96d9d6",
-                'poison' => "#a33ea1",
-                'psychic' => "#f95587",
-                'rock' => "#b6a136",
-                'steel' => "#b7b7ce",
-                'dark' => "#705746",
-            ];
+            $pokemon = $pokemonArray[0];
+            $type1 = strtolower($pokemon['Type1']);
+            $type2 = strtolower($pokemon['Type2']);
+            $hp = $pokemon['Hp'];
+            $statAttack = $pokemon['Attack']; 
+            $statDefense = $pokemon['Defense']; 
+            $statSpeed = $pokemon['Speed'];
+            $imgSrc = htmlspecialchars($pokemon['Bild']);
+            $pokeName = htmlspecialchars($pokemon['Name']);
 
-            $rarityKeys = array_keys($RarityStyles);
+            // Berechne den Hintergrundstil basierend auf den Pokémon-Typen
+            $backgroundColor = getBackgroundColor($type1, $type2, $typeColor);
             ?>
-            <?php foreach ($pokemonArray as $pokemon): ?>
+            
+            <?php foreach ($rarityKeys as $rarity): ?>
                 <?php 
-                    $type1 = strtolower($pokemon['Type1']);
-                    $type2 = strtolower($pokemon['Type2']);
-
-                    for ($i = 0; $i < 5; $i++):
-                        $rarity = $rarityKeys[$i % count($rarityKeys)];
-                        $style = $RarityStyles[$rarity];
-
-                        $hp = $pokemon['Hp'];
-                        $statAttack = $pokemon['Attack']; 
-                        $statDefense = $pokemon['Defense']; 
-                        $statSpeed = $pokemon['Speed'];
-                        $imgSrc = htmlspecialchars($pokemon['Bild']);
-                        $pokeName = htmlspecialchars($pokemon['Name']);
-
-                        echo '<div class="card" style="border-color: ' . $style['borderColor'] . ';';
-
-                        if (!empty($type2)) 
-                        {
-                            $primaryColor = $typeColor[$type1] ?? "#ffffff";
-                            $secondaryColor = $typeColor[$type2] ?? "#ffffff"; 
-                            echo 'background: radial-gradient(circle at 50% 0%, ' . $primaryColor . ' 36%, ' . $secondaryColor . ' 36%);';
-                        } 
-                        else 
-                        {
-                            $primaryColor = $typeColor[$type1] ?? "#ffffff";
-                            echo 'background: radial-gradient(circle at 50% 0%, ' . $primaryColor . ' 36%, #ffffff 36%);';
-                        }
-                        echo '">';
+                    $style = $RarityStyles[$rarity];
+                    $pokeKey = strtolower($pokeName) . '_' . strtolower($rarity);
+                    $prices = $priceData[$pokeKey];
                 ?>
+                <div class="card" style="border-color: <?= $style['borderColor']; ?>; <?= $backgroundColor; ?>" 
+                     onmouseover="showPriceChart(event, '<?= $pokeKey; ?>')" 
+                     onmouseout="hidePriceChart()">
                     <p class="hp">
                         <span>HP</span>
                         <?= $hp; ?>
@@ -138,13 +176,122 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     <p>Rarity: <?= htmlspecialchars($rarity); ?></p>
                     <button class="buy-button">Kaufen</button>
                 </div>
-                <?php endfor; ?>
             <?php endforeach; ?>
         <?php else: ?>
             <p>Keine Pokémon gefunden. Bitte versuche es erneut.</p>
         <?php endif; ?>
     </div>
 
+    <div id="chart-container" style="display:none; position: absolute;">
+        <canvas id="priceChart"></canvas>
+    </div>
+
     <button class="back-button" onclick="window.history.back();">Zurück</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const priceData = <?php echo !empty($priceData) ? json_encode($priceData) : '{}'; ?>;
+        let chart = null;
+
+        function showPriceChart(event, pokemonKey) 
+        {
+            const chartContainer = document.getElementById('chart-container');
+            const ctx = document.getElementById('priceChart').getContext('2d');
+
+            if (!priceData[pokemonKey]) 
+            {
+                console.error(`Keine Preisverlauf-Daten für ${pokemonKey} gefunden.`);
+                return;
+            }
+
+            const prices = priceData[pokemonKey];
+            const dates = Array.from({ length: prices.length }, (_, i) => `Tag ${i + 1}`);
+
+            chartContainer.style.display = 'block';
+            chartContainer.style.left = event.pageX - 80 + 'px';
+            chartContainer.style.top = event.pageY + 'px';
+
+            if (chart) 
+            {
+                chart.data.labels = dates;
+                chart.data.datasets[0].data = prices;
+                chart.update();
+            } 
+            else 
+            {
+                chart = new Chart(ctx, 
+                {
+                    type: 'line',
+                    data: 
+                    {
+                        labels: dates,
+                        datasets: 
+                        [{
+                            label: `Preisverlauf für ${pokemonKey.replace(/_/g, ' ').toUpperCase()}`,
+                            data: prices,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 2,
+                            fill: false,
+                        }]
+                    },
+                    options: 
+                    {
+                        responsive: true,
+                        plugins: 
+                        {
+                            legend: 
+                            {
+                            labels: 
+                            {
+                                color: 'white'
+                            }
+                        },
+                        tooltip: 
+                        {
+                            titleColor: 'white',
+                            bodyColor: 'white'
+                        }
+                        },
+                        scales: {
+                            y: 
+                            {
+                                beginAtZero: true,
+                                grid:
+                                {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks:
+                                {
+                                    color: 'white'
+                                }
+                            },
+                            x:
+                            {
+                                grid:
+                                {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks:
+                                {
+                                    color: 'white'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function hidePriceChart() 
+        {
+            const chartContainer = document.getElementById('chart-container');
+            chartContainer.style.display = 'none';
+            if (chart) 
+            {
+                chart.destroy();
+                chart = null;
+            }
+        }
+    </script>
 </body>
 </html>
