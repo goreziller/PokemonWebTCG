@@ -28,7 +28,6 @@ try
 
     $userId = $_SESSION['user-id'];
 
-    // Empfangen Sie die POST-Daten
     $data = json_decode(file_get_contents("php://input"), true);
     $pokemonData = $data['pokemonData'];
 

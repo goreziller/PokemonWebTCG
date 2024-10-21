@@ -6,7 +6,8 @@ const navigation = document.getElementById('navigation');
 const book = document.querySelector('.book');
 const pokemonCardsContainer = document.getElementById("pokemonCardsContainer");
 
-const typeColors = {
+const typeColors = 
+{
     fire: '#F08030',
     water: '#6890F0',
     grass: '#78C850',
@@ -53,17 +54,16 @@ function openBook()
     book.classList.toggle('open');
     if (book.classList.contains('open')) 
     {
-        loadUserPokemonCards(); // Lade die Pokémon-Karten
+        loadUserPokemonCards();
         updatePage();
         navigation.style.display = "flex";
-        navigation.classList.add('active'); // Navigation aktivieren
-        // Buchdeckel animieren
+        navigation.classList.add('active');
         book.querySelector('.cover-left').style.transform = 'rotateY(-180deg)';
         book.querySelector('.cover-right').style.transform = 'rotateY(180deg)';
     } 
     else 
     {
-        navigation.classList.remove('active'); // Navigation deaktivieren
+        navigation.classList.remove('active');
         navigation.style.display = "none";
         book.querySelector('.cover-left').style.transform = 'rotateY(0deg)';
         book.querySelector('.cover-right').style.transform = 'rotateY(0deg)';
@@ -175,7 +175,7 @@ const loadUserPokemonCards = async () =>
                 const type1 = document.createElement('span');
                 type1.textContent = pokemon.Type1.charAt(0).toUpperCase() + pokemon.Type1.slice(1);
                 type1.style.backgroundColor = typeColors[pokemon.Type1.toLowerCase()] || '#000'; 
-                type1.style.color = "#fff"; // Weißer Text
+                type1.style.color = "#fff";
                 typeContainer.appendChild(type1);
                 types.push({ type: { name: pokemon.Type1.toLowerCase() } }); 
 
@@ -184,7 +184,7 @@ const loadUserPokemonCards = async () =>
                     const type2 = document.createElement('span');
                     type2.textContent = pokemon.Type2.charAt(0).toUpperCase() + pokemon.Type2.slice(1);
                     type2.style.backgroundColor = typeColors[pokemon.Type2.toLowerCase()] || '#000'; 
-                    type2.style.color = "#fff"; // Weißer Text
+                    type2.style.color = "#fff";
                     typeContainer.appendChild(type2);
                     types.push({ type: { name: pokemon.Type2.toLowerCase() } }); 
                 }

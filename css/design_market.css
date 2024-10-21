@@ -1,12 +1,15 @@
-body {
+body 
+{
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
+
 h1
 {
     text-align: center;
 }
+
 .pokemon-grid 
 {
     display: grid;
@@ -14,12 +17,14 @@ h1
     gap: 10px;
     flex: 1;
 }
+
 .pokemon-item 
 {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: center;
 }
+
 .button-container 
 {
     margin-top: 10px;
@@ -27,10 +32,12 @@ h1
     justify-content: center;
     gap: 10px; 
 }
+
 .button-container button
 {
     padding: 5px 10px;
 }
+
 .back-button 
 {
     display: inline-block;
@@ -45,6 +52,7 @@ h1
     font-weight: bold; 
     cursor: pointer; 
 }
+
 .back-button:hover 
 {
     background-color: #45a049; 

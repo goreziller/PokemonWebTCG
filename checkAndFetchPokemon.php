@@ -1,10 +1,13 @@
 <?php
 header('Content-Type: application/json');
 
-try {
+try 
+{
     $pdo = new PDO('mysql:host=localhost;dbname=spieler', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
+} 
+catch (PDOException $e) 
+{
     echo json_encode(['error' => 'Datenbankverbindung fehlgeschlagen: ' . $e->getMessage()]);
     exit;
 }
@@ -12,27 +15,31 @@ try {
 $stmt = $pdo->query("SELECT COUNT(*) FROM pokemonkarten");
 $count = $stmt->fetchColumn();
 
-if ($count < 942) {
+if ($count < 942) 
+{
     $offset = 941;
     $limit = 59;  
     $url = "https://pokeapi.co/api/v2/pokemon?limit=$limit&offset=$offset"; 
     
     $response = @file_get_contents($url);
-    if ($response === FALSE) {
+    if ($response === FALSE) 
+    {
         echo json_encode(['error' => 'Fehler beim Abrufen der Daten von der API.']);
         exit;
     }
     
     $pokemonData = json_decode($response, true)['results'];
     
-    foreach ($pokemonData as $pokemon) {
+    foreach ($pokemonData as $pokemon) 
+    {
         $name = $pokemon['name'];
         $pokeUrl = $pokemon['url'];
         $pokeResponse = @file_get_contents($pokeUrl);
         
-        if ($pokeResponse === FALSE) {
+        if ($pokeResponse === FALSE) 
+        {
             echo json_encode(['error' => 'Fehler beim Abrufen der Pokémon-Daten.']);
-            continue; // überspringe das aktuelle Pokémon
+            continue;
         }
         
         $pokeDetails = json_decode($pokeResponse, true);
@@ -53,7 +60,9 @@ if ($count < 942) {
         ]);
     }
     echo json_encode(['message' => 'Pokémon-Daten erfolgreich abgerufen und gespeichert.']);
-} else {
+} 
+else 
+{
     echo json_encode(['message' => 'Daten sind bereits vorhanden.']);
 }
 ?>

@@ -86,24 +86,24 @@ const getPokemonRarity = (pokemon) =>
 
   if (random < raritys.legendary) 
   {
-    return 'legendary'; // Extrem selten, aber hier nur zur Sicherheit
+    return 'legendary';
   } 
   else if (random < raritys.epic + raritys.legendary) 
   {
-    return 'epic'; // Episch, aber selten
+    return 'epic'; 
   } 
   else if (random < raritys.rare + raritys.epic + raritys.legendary) 
   {
-    return 'rare'; // Selten
+    return 'rare'; 
   } 
   else if 
   (random < raritys.uncommon + raritys.rare + raritys.epic + raritys.legendary) 
   {
-    return 'uncommon'; // Ungewöhnlich
+    return 'uncommon'; 
   } 
   else 
   {
-    return 'common'; // Standardmäßig häufig
+    return 'common';
   }
 };
 

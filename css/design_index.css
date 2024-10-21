@@ -19,7 +19,7 @@ body
 h1 
 {
     text-align: center;
-    color: #ffcc00; /* Pokémon-Farbe */
+    color: #ffcc00;
     font-size: 2.5em;
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);

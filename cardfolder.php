@@ -9,13 +9,10 @@
 <body>
     <div class="book" onclick="openBook()">
         <div class="cover-left"></div>
-        <!-- Buchseiten -->
         <div class="pages">
-            <!-- Erste Seite mit dynamisch geladenen Karten -->
             <div class="page active">
                 <div class="pokemon-cards-container" id="pokemonCardsContainer"></div>
             </div>
-            <!-- Zweite Seite mit weiteren dynamisch geladenen Karten -->
             <div class="page">
                 <div class="pokemon-cards-container" id="pokemonCardsContainer2"></div>
             </div>
