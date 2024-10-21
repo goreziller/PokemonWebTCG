@@ -70,8 +70,7 @@ const legendaryPokemonNames =
 
 const btn = document.getElementById("btn");
 let selectedPokemonIds = [];
-let loadedPokemonData = []; 
-let rarity;
+let loadedPokemonData = [];
 
 const getPokemonRarity = (pokemon) => 
 {
@@ -166,6 +165,7 @@ const addSelectedPokemonToDatabase = async () =>
     
     if (pokemon) 
     {
+      const rarity = getPokemonRarity(pokemon)
       const pokemonData = 
       {
         name: pokemon.Name,
@@ -176,7 +176,7 @@ const addSelectedPokemonToDatabase = async () =>
         speed: pokemon.Speed,
         type1: pokemon.Type1,
         type2: pokemon.Type2,
-        rarity: getPokemonRarity(pokemon)
+        rarity: rarity
       };
       selectedPokemonData.push(pokemonData);
     } 
@@ -232,7 +232,7 @@ let generateCard = (data) =>
   const statDefense = data.Defense || "N/A";
   const statSpeed = data.Speed || "N/A";
 
-  rarity = getPokemonRarity(data);
+  const rarity = getPokemonRarity(data);
 
   const card = document.createElement("div");
   card.classList.add("card");

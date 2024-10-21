@@ -100,11 +100,11 @@ function getBackgroundColor($type1, $type2, $type_colors) {
             <h3><?php echo ucfirst(htmlspecialchars($pokemon['name']) . " Nr." . $pokemon['id']); ?></h3>
             <img src="<?php echo htmlspecialchars($pokemon['bild']); ?>" alt="<?php echo htmlspecialchars($pokemon['name']); ?>">
             <div class="button-container">
-                <form action="kaufen.php" method="POST">
+                <form action="buyPokemon.php" method="POST">
                     <input type="hidden" name="pokemon_name" value="<?php echo htmlspecialchars($pokemon['name']); ?>">
                     <button type="submit">Kaufen</button>
                 </form>
-                <form action="verkaufen.php" method="POST">
+                <form action="sellPokemon.php" method="POST">
                     <input type="hidden" name="pokemon_name" value="<?php echo htmlspecialchars($pokemon['name']); ?>">
                     <button type="submit">Verkaufen</button>
                 </form>
