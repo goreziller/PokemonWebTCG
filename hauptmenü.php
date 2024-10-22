@@ -1,20 +1,53 @@
 <?php
     session_start();
 
+    function refreshCoinsFromDatabase() 
+    {
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "spieler";
+
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        if ($conn->connect_error) 
+        {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $userId = $_SESSION['user-id'];
+        $sql = "SELECT Coins FROM benutzer WHERE id = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $stmt->bind_result($coins);
+        $stmt->fetch();
+
+        if ($coins !== null) 
+        {
+            $_SESSION['coins'] = $coins;
+        }
+
+        $stmt->close();
+        $conn->close();
+    }
+
+    refreshCoinsFromDatabase();
     $Coins = $_SESSION["coins"];
 
     function name()
     {
-        echo $_SESSION['vorname'] . " " . $_SESSION["nachname"]. " " . "<img src='./bilder/coinIcon.png' height='40'/>" . " " . $_SESSION['coins'];
+        echo $_SESSION['vorname'] . " " . $_SESSION["nachname"] . " " . "<img src='./bilder/coinIcon.png' height='40'/>" . " " . $_SESSION['coins'];
     }
 
-    if(array_key_exists('folder', $_POST)) 
+    if (array_key_exists('folder', $_POST)) 
     {
         openfolder();
     }
-    else if(array_key_exists('openpacks', $_POST)) 
+    else if (array_key_exists('openpacks', $_POST)) 
     {
-        if($Coins >= 100)
+        if ($Coins >= 100)
         {
             $Coins -= 100;
             updateCoinsInDatabase($Coins);
@@ -25,11 +58,11 @@
             header('Location: main.php');
         }
     }
-    else if(array_key_exists('openshop', $_POST))
+    else if (array_key_exists('openshop', $_POST))
     {
         openshop();
     }
-    else if(array_key_exists('logout', $_POST))
+    else if (array_key_exists('logout', $_POST))
     {
         logout();
     }
@@ -77,7 +110,7 @@
 
         if ($stmt->execute()) 
         {
-            $_SESSION['coins'] = $newCoins;
+            $_SESSION['coins'] = $newCoins; // Die Coins in der Session aktualisieren
         } 
         else 
         {
