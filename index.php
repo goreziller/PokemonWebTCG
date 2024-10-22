@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/design_index.css">
+    <script src="./js/registerungsscript.js"></script>
     <title>Pokemon TCG</title>
 </head>
 <body>
@@ -12,7 +13,10 @@
         <form action="einloggen.php" method="POST">
             <h2>Anmeldung</h2>
             <input type="text" name="name" placeholder="Benutzername" required>
-            <input type="password" name="pw" placeholder="Passwort" required>
+            <div class="password-container">
+                <input type="password" id="passwordConfirm" name="pw" placeholder="Passwort" required>
+                <span class="toggle-password" onclick="togglePassword('passwordConfirm')">👁️</span>
+            </div>
             <div class="button-group">
                 <input type="submit" value="Anmelden">
             </div>

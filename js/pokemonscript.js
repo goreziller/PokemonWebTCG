@@ -22,11 +22,11 @@ const typeColor =
 
 const raritys = 
 {
-  common: 0.5, //Common 50%
-  uncommon: 0.25, //Uncommon 25%
-  rare: 0.15, //Rare 15%
-  epic: 0.08,  //Epic 8%
-  legendary: 0.02 //Legendary 2%
+  common: 0.5, // Common 50%
+  uncommon: 0.25, // Uncommon 25%
+  rare: 0.15, // Rare 15%
+  epic: 0.08,  // Epic 8%
+  legendary: 0.02 // Legendary 2%
 };
 
 const rarityStyles = 
@@ -55,7 +55,7 @@ const epicPokemonNames =
   "mew", "celebi", "jirachi", "deoxys-normal", "manaphy", "phione", "darkrai", "shaymin", "arceus",
   "victini", "keldeo", "meloetta", "genesect", "diancie", "hoopa", "volcanion", "magearna", "marshadow",
   "zeraora", "meltan", "melmetal", "zarude"
-]
+];
 
 const legendaryPokemonNames = 
 [
@@ -165,7 +165,7 @@ const addSelectedPokemonToDatabase = async () =>
     
     if (pokemon) 
     {
-      const rarity = getPokemonRarity(pokemon)
+      const rarity = pokemon.rarity;  
       const pokemonData = 
       {
         name: pokemon.Name,
@@ -287,6 +287,8 @@ let generateCard = (data) =>
   });
 
   document.getElementById("card-container").appendChild(card);
+  
+  data.rarity = rarity;
 };
 
 let appendTypes = (types, card) => 

@@ -19,18 +19,20 @@ body
 h1 
 {
     text-align: center;
-    color: #ffcc00;
+    color: 	white;
     font-size: 2.5em;
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     border-style: solid;
     border-color: black;
-    background-color: blue;
+    border-radius: 18px;
+    background-image: linear-gradient(to right, red, orange, yellow, 
+  green, blue, indigo, violet);
 }
 
 .container 
 {
-    background-color: white;
+    background-color: rgb(58, 185, 185);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -83,11 +85,28 @@ p
 
 a 
 {
-    color: #007bff;
+    color:white;
     text-decoration: none;
 }
 
 a:hover 
 {
     text-decoration: underline;
+}
+
+.password-container 
+{
+    position: relative;
+}
+
+.toggle-password 
+{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%); 
+    cursor: pointer;
+    user-select: none; 
+    font-size: 18px; 
+    color: #777; 
 }

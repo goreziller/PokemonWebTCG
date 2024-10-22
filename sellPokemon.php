@@ -1,5 +1,12 @@
 <?php
-$pokemonArray = [];
+session_start();
+
+if (!isset($_SESSION['priceData'])) 
+{
+    $_SESSION['priceData'] = [];
+}
+
+$pokemonArray = []; 
 
 function generateRandomPrices($basePrice, $numDays) 
 {
@@ -30,6 +37,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         die("Verbindung zur Datenbank fehlgeschlagen: " . $conn->connect_error);
     }
 
+    if (isset($_POST['sell'])) 
+    {
+        $userId = $_SESSION['user-id'];
+        $pokemonName = $conn->real_escape_string($_POST['pokemon_name']);
+        $rarity = $conn->real_escape_string($_POST['rarity']);
+        
+        $pokeKey = strtolower($pokemonName) . '_' . strtolower($rarity);
+        if (isset($_SESSION['priceData'][$pokeKey])) 
+        {
+            $price = $_SESSION['priceData'][$pokeKey][29];
+        } 
+        else 
+        {
+            echo "Preis nicht gefunden.";
+            exit;
+        }
+
+        $sql = "SELECT benutzerpokemonkarten.PokemonKartenNr FROM benutzerpokemonkarten 
+                JOIN pokemon ON benutzerpokemonkarten.PokemonKartenNr = pokemon.id 
+                WHERE BenutzerNr = '$userId' AND pokemon.name = '$pokemonName' AND pokemon.Rarity = '$rarity'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) 
+        {
+            $conn->query("UPDATE benutzer SET coins = coins + '$price' WHERE id = '$userId'");
+
+            $conn->query("DELETE FROM benutzerpokemonkarten WHERE BenutzerNr = '$userId' 
+            AND PokemonKartenNr IN (SELECT id FROM pokemon WHERE name = '$pokemonName' AND Rarity = '$rarity')");
+            
+            $conn->query("DELETE FROM pokemon WHERE name = '$pokemonName' AND Rarity = '$rarity'");
+
+            echo "Verkauf erfolgreich! Du hast $price Coins erhalten.";
+        } 
+        else 
+        {
+            echo "Du besitzt dieses Pokémon nicht oder die Rarität stimmt nicht.";
+        }
+        $conn->close();
+        exit;
+    }
+
     $pokemon_name = $conn->real_escape_string($_POST['pokemon_name']);
 
     $sql = "SELECT * FROM pokemonkarten WHERE name = '$pokemon_name'";
@@ -43,30 +91,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         }
     }
 
+    $basePrices = 
+    [
+        'common' => 10,
+        'uncommon' => 20,
+        'rare' => 30,
+        'epic' => 50,
+        'legendary' => 75,
+    ];
+
+    $rarityKeys = array_keys($basePrices);
+
+    if (!empty($pokemonArray)) 
+    {
+        $pokemon = $pokemonArray[0];
+        foreach ($rarityKeys as $rarity) 
+        {
+            $basePrice = $basePrices[$rarity];
+            $_SESSION['priceData'][strtolower($pokemon['Name']) . '_' . strtolower($rarity)] = generateRandomPrices($basePrice, 30);
+        }
+    }
+
     $conn->close();
 }
 
-$basePrices = 
-[
-    'common' => 5,
-    'uncommon' => 10,
-    'rare' => 15,
-    'epic' => 25,
-    'legendary' => 40,
-];
-
-$rarityKeys = array_keys($basePrices);
-
-$priceData = [];
-if (!empty($pokemonArray)) {
-    $pokemon = $pokemonArray[0];
-    foreach ($rarityKeys as $rarity) 
-    {
-        $basePrice = $basePrices[$rarity];
-
-        $priceData[strtolower($pokemon['Name']) . '_' . strtolower($rarity)] = generateRandomPrices($basePrice, 30);
-    }
-}
+$priceData = $_SESSION['priceData'];
 
 $typeColor = 
 [
@@ -141,17 +190,15 @@ function getBackgroundColor($type1, $type2, $type_colors)
                 <?php 
                     $style = $RarityStyles[$rarity];
                     $pokeKey = strtolower($pokeName) . '_' . strtolower($rarity);
-                    $prices = $priceData[$pokeKey];
+                    $prices = $_SESSION['priceData'][$pokeKey]; // Use session data here
                 ?>
-                <div class="card" style="border-color: <?= $style['borderColor']; ?>; <?= $backgroundColor; ?>" 
-                     onmouseover="showPriceChart(event, '<?= $pokeKey; ?>')" 
-                     onmouseout="hidePriceChart()">
+                <div class="card" style="border-color: <?= $style['borderColor']; ?>; <?= $backgroundColor; ?>">
                     <p class="hp">
                         <span>HP</span>
                         <?= $hp; ?>
                     </p>
                     <img src="<?= $imgSrc; ?>" alt="<?= $pokeName; ?> image" />
-                    <h2 class="poke-name"><?= $pokeName; ?></h2>
+                    <h2 class="poke-name"><?= ucfirst($pokeName); ?></h2>
                     <div class="types">
                         <span style="background-color: <?= $typeColor[$type1]; ?>;"><?= ucfirst($type1); ?></span>
                         <?php if (!empty($type2)): ?>
@@ -172,8 +219,8 @@ function getBackgroundColor($type1, $type2, $type_colors)
                             <p>Speed</p>
                         </div>
                     </div>
-                    <p>Rarity: <?= htmlspecialchars($rarity); ?></p>
-                    <button class="sell-button">Verkaufen</button>
+                    <p>Rarity: <?= ucfirst(htmlspecialchars($rarity)); ?></p>
+                    <button class="sell-button" onclick="sellPokemon('<?= $pokeName; ?>', '<?= $rarity; ?>')">Verkaufen</button>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
@@ -189,7 +236,7 @@ function getBackgroundColor($type1, $type2, $type_colors)
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const priceData = <?php echo !empty($priceData) ? json_encode($priceData) : '{}'; ?>;
+        const priceData = <?php echo json_encode($priceData); ?>;
         let chart = null;
 
         function showPriceChart(event, pokemonKey) 
@@ -240,16 +287,16 @@ function getBackgroundColor($type1, $type2, $type_colors)
                         {
                             legend: 
                             {
-                            labels: 
+                                labels: 
+                                {
+                                    color: 'white'
+                                }
+                            },
+                            tooltip: 
                             {
-                                color: 'white'
+                                titleColor: 'white',
+                                bodyColor: 'white'
                             }
-                        },
-                        tooltip: 
-                        {
-                            titleColor: 'white',
-                            bodyColor: 'white'
-                        }
                         },
                         scales: {
                             y: 
@@ -290,6 +337,27 @@ function getBackgroundColor($type1, $type2, $type_colors)
                 chart.destroy();
                 chart = null;
             }
+        }
+
+        function sellPokemon(pokemonName, rarity) 
+        {
+            const formData = new FormData();
+            formData.append('sell', true);
+            formData.append('pokemon_name', pokemonName);
+            formData.append('rarity', rarity);
+
+            fetch('', 
+            {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => 
+            {
+                alert(data);
+                location.reload();
+            })
+            .catch(error => console.error('Error:', error));
         }
     </script>
 </body>

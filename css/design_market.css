@@ -10,10 +10,19 @@ body
 
 h1
 {
+    color: white;
     text-align: center;
-    background-color: black;
-    color: rgb(23, 208, 233);
-    border-radius: 5px;
+    border: solid black;
+    border-radius: 18px;
+    background-image: linear-gradient(to right, red, orange, yellow, 
+    green, blue, indigo, violet);
+}
+
+h3
+{
+    background-color: white;
+    border: solid black;
+    border-radius: 18px;
 }
 
 .pokemon-grid 

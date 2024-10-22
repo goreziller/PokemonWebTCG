@@ -1,15 +1,18 @@
 h1
 {
-    background-color: black;
-    color: rgb(34, 193, 214);
+    color: white;
     text-align: center;
+    border: solid black;
+    border-radius: 18px;
+    background-image: linear-gradient(to right, red, orange, yellow, 
+    green, blue, indigo, violet);
 }
 
 h3
 {
-    border: solid rgb(25, 44, 214);
+    background-color: white;
+    border: solid black;
     border-radius: 18px;
-    color: rgb(38, 189, 63);
 }
 
 body
@@ -38,7 +41,7 @@ body
     flex-direction: column; 
     justify-content: center; 
     align-items: center;
-    background-color: #000000;
+    background-color: rgb(58, 185, 185);
     text-align: center;
     padding: 10px;
     border: 1px solid #ccc;
