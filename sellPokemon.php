@@ -232,7 +232,7 @@ function getBackgroundColor($type1, $type2, $type_colors)
         <canvas id="priceChart"></canvas>
     </div>
 
-    <button class="back-button" onclick="window.history.back();">Zurück</button>
+    <button class="back-button" onclick="location.href='shop.php'">Zurück</button>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>

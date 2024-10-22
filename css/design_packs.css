@@ -174,13 +174,8 @@ body
   display: flex; 
   justify-content: center;
   margin-top: 20px;
-}
-
-.button-container 
-{
-  display: flex;
-  justify-content: center; 
-  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .button-container button 
@@ -200,5 +195,5 @@ body
 .button-container button:hover 
 {
   background-color: #2bec55;
-  transform: scale(1.05);
+  transform: scale(1.02);
 }

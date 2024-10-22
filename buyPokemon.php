@@ -220,7 +220,7 @@ function getBackgroundColor($type1, $type2, $type_colors)
             <?php 
                 $style = $RarityStyles[$rarity];
                 $pokeKey = strtolower($pokeName) . '_' . strtolower($rarity);
-                $prices = $_SESSION['priceData'][$pokeKey]; // Use session data here
+                $prices = $_SESSION['priceData'][$pokeKey];
             ?>
             <div class="card" style="border-color: <?= $style['borderColor']; ?>; <?= $backgroundColor; ?>" 
                  onmouseover="showPriceChart(event, '<?= $pokeKey; ?>')" 
@@ -264,11 +264,11 @@ function getBackgroundColor($type1, $type2, $type_colors)
     <canvas id="priceChart"></canvas>
 </div>
 
-<button class="back-button" onclick="window.history.back();">Zurück</button>
+<button class="back-button" onclick="location.href='shop.php'">Zurück</button>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const priceData = <?php echo json_encode($priceData); ?>; // Retrieve price data from session
+    const priceData = <?php echo json_encode($priceData); ?>;
     let chart = null;
 
     function showPriceChart(event, pokemonKey) 
