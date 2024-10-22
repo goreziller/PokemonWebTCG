@@ -16,16 +16,24 @@
             <div class="page">
                 <div class="pokemon-cards-container" id="pokemonCardsContainer2"></div>
             </div>
+            <div class="page">
+                <div class="pokemon-cards-container" id="pokemonCardsContainer2"></div>
+            </div>
+            <div class="page">
+                <div class="pokemon-cards-container" id="pokemonCardsContainer2"></div>
+            </div>
+            <div class="page">
+                <div class="pokemon-cards-container" id="pokemonCardsContainer2"></div>
+            </div>
         </div>
         <div class="cover-right"></div>
         <div class="navigation" id="navigation">
-        <button class="nav-button" onclick="prevPage()" id="prevButton">Vorehrige Seite</button>
-        <button class="nav-button" onclick="nextPage()" id="nextButton">Nächste Seite</button>
-        <button class="nav-button" location.href='main.php'>Zum Hauptmenü</button>
+            <button class="nav-button" onclick="prevPage(); event.stopPropagation();" id="prevButton">Vorherige Seite</button>
+            <button class="nav-button" onclick="nextPage(); event.stopPropagation();" id="nextButton">Nächste Seite</button>
+            <button class="nav-button" onclick="location.href='main.php'; event.stopPropagation();">Zum Hauptmenü</button>
+        </div>
     </div>
-</div>
 
-<script src="./js/cardfolderscript.js"></script>
-
+    <script src="./js/cardfolderscript.js"></script>
 </body>
 </html>

@@ -1,6 +1,22 @@
 h1
 {
+    background-color: black;
+    color: rgb(34, 193, 214);
     text-align: center;
+}
+
+h3
+{
+    border: solid rgb(25, 44, 214);
+    border-radius: 18px;
+    color: rgb(38, 189, 63);
+}
+
+body
+{
+    background: url('../bilder/background.png') no-repeat center;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .container 
@@ -22,7 +38,7 @@ h1
     flex-direction: column; 
     justify-content: center; 
     align-items: center;
-    background-color: #f0f0f0;
+    background-color: #000000;
     text-align: center;
     padding: 10px;
     border: 1px solid #ccc;
@@ -39,10 +55,11 @@ h1
 {
     margin-top: 10px;
     padding: 5px 10px;
-    background-color: #4CAF50;
+    background-color: #45a049;
     color: white;
-    border: none;
+    border: solid black;
     cursor: pointer;
+    border-radius: 18px;
 }
 
 .center-button 
@@ -57,13 +74,14 @@ h1
     padding: 10px 20px; 
     font-size: 16px; 
     color: white; 
-    background-color: #4CAF50;; 
-    border: none; 
-    border-radius: 5px; 
+    background-color: #4CAF50; 
+    border: solid black; 
+    border-radius: 18px; 
     cursor: pointer;
 }
 
-.back-button:hover 
+.back-button:hover, .item button:hover 
 {
-    background-color: #0056b3; 
+    background-color: #2bec55;
+    transform: scale(1.1); 
 }

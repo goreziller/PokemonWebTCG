@@ -1,5 +1,8 @@
 body 
 {
+    background: url('../bilder/background.png') no-repeat center;
+    background-attachment: fixed;
+    background-size: cover;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -8,6 +11,9 @@ body
 h1
 {
     text-align: center;
+    background-color: black;
+    color: rgb(23, 208, 233);
+    border-radius: 5px;
 }
 
 .pokemon-grid 
@@ -47,8 +53,8 @@ h1
     background-color: #4CAF50; 
     color: white; 
     text-decoration: none; 
-    border: none; 
-    border-radius: 5px; 
+    border: solid black; 
+    border-radius: 18px; 
     font-weight: bold; 
     cursor: pointer; 
 }
@@ -56,4 +62,33 @@ h1
 .back-button:hover 
 {
     background-color: #45a049; 
+}
+
+.buy-button
+{
+    border-radius: 18px;
+    background-color: red;
+    cursor: pointer;
+}
+
+.buy-button:hover, .sell-button:hover
+{
+    transform: scale(1.1);
+}
+
+.sell-button:hover
+{
+    background-color: #2bec55;
+}
+
+.sell-button
+{
+    border-radius: 18px;
+    background-color: #45a049;
+    cursor: pointer;
+}
+
+.sell-button, .buy-button
+{
+    color: white;
 }

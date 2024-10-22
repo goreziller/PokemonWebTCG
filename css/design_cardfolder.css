@@ -9,6 +9,9 @@ body
   align-items: center;
   height: 1150px;
   perspective: 2500px;
+  background: url('../bilder/background.png') no-repeat center;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .book 
@@ -22,32 +25,22 @@ body
   cursor: pointer;
 }
 
-.book .cover-left 
+.book .cover-left, .book .cover-right 
 {
   position: absolute;
   top: 0;
-  left: 0;
   width: 575px; 
   height: 100%;
   background-color: #3b4cca;
   backface-visibility: hidden;
   transform-origin: left;
-  transform: rotateY(0deg);
   transition: transform 1.5s ease-in-out;
 }
 
 .book .cover-right 
 {
-  position: absolute;
-  top: 0;
   right: 0;
-  width: 480px;
-  height: 100%;
-  background-color: #3b4cca;
-  backface-visibility: hidden;
   transform-origin: right;
-  transform: rotateY(0deg);
-  transition: transform 1.5s ease-in-out;
 }
 
 .book .pages 
@@ -57,12 +50,10 @@ body
   left: 0;
   width: 1150px; 
   height: 1150px; 
-  background-color: #fff;
+  background-color: rgb(46, 219, 205);
   transform-style: preserve-3d;
-  transform: translateZ(-1px);
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
-  background-color: rgb(46, 219, 205);
 }
 
 .book.open .pages 
@@ -174,10 +165,10 @@ body
 
 .nav-button 
 {
-  background-color: #3b4cca;
+  background-color: #4CAF50;
   color: white;
-  border: none;
-  border-radius: 5px;
+  border: solid black;
+  border-radius: 18px;
   padding: 10px 20px;
   margin: 10px;
   cursor: pointer;
@@ -188,10 +179,19 @@ body
 
 .nav-button:hover 
 {
-  background-color: #2a2d60;
+  background-color: #2bec55;
+  transform: scale(1.1);
 }
 
 .book.open .navigation 
 {
   display: flex;
+}
+
+button.disabled 
+{
+  background-color: #ccc; 
+  color: #666; 
+  cursor: not-allowed; 
+  pointer-events: none;
 }

@@ -20,6 +20,10 @@
             updateCoinsInDatabase($Coins);
             openpacks();
         }
+        else
+        {
+            header('Location: main.php');
+        }
     }
     else if(array_key_exists('openshop', $_POST))
     {
