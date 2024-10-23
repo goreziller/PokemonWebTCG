@@ -1,3 +1,11 @@
+@font-face 
+{
+    font-family: "Pixel";
+    src:
+      url("/POKEMONWEBTCG/font/SF-Pixelate-Bold.ttf");
+      font-weight: 900;
+}
+
 body 
 {
   font-family: Arial, sans-serif;
@@ -17,8 +25,8 @@ body
 .book 
 {
   position: relative;
-  width: 1050px; 
-  height: 1000px;
+  width: 1150px; 
+  height: 1150px;
   transform-style: preserve-3d;
   transform: rotateY(0deg);
   transition: transform 1.5s ease-in-out;
@@ -156,15 +164,18 @@ body
 .navigation 
 {
   display: none;
+  background: black;
+  border-radius: 18px;
   justify-content: center;
   margin-top: 10px;
   position: absolute;
-  bottom: -150px;
+  bottom: -75px;
   left: 175px;
 }
 
 .nav-button 
 {
+  font-family: 'Pixel';
   background-color: #4CAF50;
   color: white;
   border: solid black;

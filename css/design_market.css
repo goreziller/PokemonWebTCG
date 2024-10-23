@@ -1,3 +1,11 @@
+@font-face 
+{
+    font-family: "Pixel";
+    src:
+      url("/POKEMONWEBTCG/font/SF-Pixelate-Bold.ttf");
+      font-weight: 900;
+}
+
 body 
 {
     background: url('../bilder/background.png') no-repeat center;
@@ -20,6 +28,7 @@ h1
 
 h3
 {
+    font-family: 'Pixel';
     background-color: white;
     border: solid black;
     border-radius: 18px;
@@ -55,6 +64,7 @@ h3
 
 .back-button 
 {
+    font-family: 'Pixel';
     display: inline-block;
     text-align: center; 
     margin: 20px auto; 

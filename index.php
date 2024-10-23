@@ -20,7 +20,7 @@
             <div class="button-group">
                 <input type="submit" value="Anmelden">
             </div>
-            <p>Noch kein Konto? Dann hier <a href="registerung.php">Registrieren</a></p>
+            <p>Noch kein Konto? <br> Dann hier <a href="registerung.php">Registrieren</a></p>
         </form>
     </div>
 </body>

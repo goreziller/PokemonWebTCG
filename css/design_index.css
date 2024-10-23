@@ -5,9 +5,17 @@ html
     background-size: cover;
 }
 
+@font-face 
+{
+    font-family: "Pixel";
+    src:
+      url("/POKEMONWEBTCG/font/SF-Pixelate-Bold.ttf");
+      font-weight: 900;
+}
+
 body 
 {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Pixel';
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -60,6 +68,7 @@ input[type="password"]
 
 input[type="submit"] 
 {
+    font-family: 'Pixel';
     width: 100%;
     padding: 15px;
     margin-top: 10px;
