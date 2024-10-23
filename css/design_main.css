@@ -9,13 +9,13 @@ html
 {
     font-family: "Pixel";
     src:
-      url("/POKEMONWEBTCG/font/SF-Pixelate-Bold.ttf");
+      url("../font/SF-Pixelate-Bold.ttf");
       font-weight: 900;
 }
 
 body 
 {
-    font-family: 'Pixel' !important;
+    font-family: 'Pixel';
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -32,9 +32,10 @@ h1
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     border: solid black;
-    border-radius: 18px;
+    border-radius: 30px;
     background-image: linear-gradient(to right, red, orange, yellow, 
   green, blue, indigo, violet);
+    width: 1150px;
 }
 
 .container 

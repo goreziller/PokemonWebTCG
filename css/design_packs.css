@@ -1,5 +1,6 @@
 body
 {
+  font-family: 'Pixel';
   background: url('../bilder/background.png') no-repeat center;
   background-attachment: fixed;
   background-size: cover;
@@ -9,7 +10,7 @@ body
 {
     font-family: "Pixel";
     src:
-      url("/POKEMONWEBTCG/font/SF-Pixelate-Bold.ttf");
+      url("../font/SF-Pixelate-Bold.ttf");
       font-weight: 900;
 }
 
@@ -27,7 +28,8 @@ body
   border-color: black;
   position: relative;
   width: 300px;
-  height: 450px; 
+  height: 490px;
+  min-height: 490px;
   padding: 30px 20px;
   box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -74,7 +76,6 @@ body
 
 .poke-name 
 {
-  font-family: 'Pixel';
   text-align: center;
   font-weight: 600;
 }

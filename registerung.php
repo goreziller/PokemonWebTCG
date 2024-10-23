@@ -26,6 +26,7 @@
             </div>
             <div class="button-group">
                 <input type="submit" value="Registrieren">
+                <button type="button" onclick="window.location.href='index.php'">Zurück zum Einloggen</button>
             </div>
         </form>
     </div>

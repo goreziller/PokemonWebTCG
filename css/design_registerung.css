@@ -9,7 +9,7 @@ html
 {
     font-family: "Pixel";
     src:
-      url("/POKEMONWEBTCG/font/SF-Pixelate-Bold.ttf");
+      url("../font/SF-Pixelate-Bold.ttf");
       font-weight: 900;
 }
 
@@ -27,9 +27,9 @@ body
 {
     background-color: rgb(58, 185, 185);
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 320px;
+    width: 450px;
 }
 
 h2 
@@ -52,11 +52,14 @@ input[type="email"]
     font-size: 14px;
 }
 
-.button-group {
-    text-align: center;
+.button-group 
+{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
 }
 
-input[type="submit"] 
+input[type="submit"], button
 {
     font-family: "Pixel";
     background-color: #007bff;
@@ -66,9 +69,15 @@ input[type="submit"]
     border-radius: 18px;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: 48%;
 }
 
 input[type="submit"]:hover 
+{
+    background-color: #0056b3;
+}
+
+button:hover 
 {
     background-color: #0056b3;
 }

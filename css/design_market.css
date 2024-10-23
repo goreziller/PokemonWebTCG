@@ -2,18 +2,20 @@
 {
     font-family: "Pixel";
     src:
-      url("/POKEMONWEBTCG/font/SF-Pixelate-Bold.ttf");
+      url("../font/SF-Pixelate-Bold.ttf");
       font-weight: 900;
 }
 
 body 
 {
+    font-family: 'Pixel';
     background: url('../bilder/background.png') no-repeat center;
     background-attachment: fixed;
     background-size: cover;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    align-items: center;
 }
 
 h1
@@ -21,15 +23,19 @@ h1
     color: white;
     text-align: center;
     border: solid black;
-    border-radius: 18px;
+    border-radius: 30px;
     background-image: linear-gradient(to right, red, orange, yellow, 
     green, blue, indigo, violet);
+    padding: 20px;
+    width: 100%; 
+    max-width: 800px; 
+    margin: 20px 0;
 }
 
 h3
 {
-    font-family: 'Pixel';
-    background-color: white;
+    color: white;
+    background-color: rgb(56, 31, 143);
     border: solid black;
     border-radius: 18px;
 }
@@ -40,6 +46,7 @@ h3
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 10px;
     flex: 1;
+    width: 100%;
 }
 
 .pokemon-item 
@@ -47,6 +54,10 @@ h3
     border: 1px solid #ccc;
     padding: 10px;
     text-align: center;
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between;
+    min-height: 250px;
 }
 
 .button-container 

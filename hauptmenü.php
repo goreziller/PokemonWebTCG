@@ -110,7 +110,7 @@
 
         if ($stmt->execute()) 
         {
-            $_SESSION['coins'] = $newCoins; // Die Coins in der Session aktualisieren
+            $_SESSION['coins'] = $newCoins;
         } 
         else 
         {

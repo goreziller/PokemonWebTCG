@@ -190,7 +190,7 @@ function getBackgroundColor($type1, $type2, $type_colors)
                 <?php 
                     $style = $RarityStyles[$rarity];
                     $pokeKey = strtolower($pokeName) . '_' . strtolower($rarity);
-                    $prices = $_SESSION['priceData'][$pokeKey]; // Use session data here
+                    $prices = $_SESSION['priceData'][$pokeKey];
                 ?>
                 <div class="card" style="border-color: <?= $style['borderColor']; ?>; <?= $backgroundColor; ?>">
                     <p class="hp">
